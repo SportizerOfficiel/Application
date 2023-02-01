@@ -9,11 +9,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@mantine/carousel": "^5.10.2",
+    "@mantine/core": "^5.10.2",
+    "@mantine/dates": "^5.10.2",
+    "@mantine/dropzone": "^5.10.2",
+    "@mantine/form": "^5.10.2",
+    "@mantine/hooks": "^5.10.2",
+    "@mantine/modals": "^5.10.2",
+    "@mantine/notifications": "^5.10.2",
+    "@mantine/nprogress": "^5.10.2",
+    "@mantine/spotlight": "^5.10.2",
     "@next/font": "13.1.6",
+    "axios": "^1.3.0",
+    "dayjs": "^1.11.7",
+    "embla-carousel-react": "^7.0.9",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "gsap": "^3.11.4",
+    "include-media": "^2.0.0",
+    "lil-gui": "^0.17.0",
+    "mobile-detect": "^1.4.5",
+    "mongodb": "^5.0.0",
     "next": "13.1.6",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "sass": "^1.58.0"
   }
 }
