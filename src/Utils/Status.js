@@ -1,4 +1,6 @@
-
+/**
+ * Les différents status de renvoie
+ */
 const Success = ({ result, statusCode = 200, res }) => {
   return res.status(statusCode).json(result);
 };

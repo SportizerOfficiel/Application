@@ -1,6 +1,9 @@
 import * as MatchsController from "../../../Databases/Controllers/MatchsController"
 import Status from "@/Utils/Status";
 
+/**
+ * requêtes des matchs sur l'api 
+ */
 export default async function handler(req, res) {
   const { method, body, query } = req;
   switch (method) {

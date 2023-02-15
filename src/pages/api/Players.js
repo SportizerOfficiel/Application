@@ -1,6 +1,9 @@
 import * as PlayersController from "../../../Databases/Controllers/PlayersController"
 import Status from "@/Utils/Status";
 
+/**
+ * requêtes des joueurs sur l'api 
+ */
 export default async function handler(req, res) {
   const { method, body, query } = req;
   switch (method) {
