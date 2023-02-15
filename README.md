@@ -36,3 +36,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+
+## Détails sur l'application
+
+Structure de l'application :
+
+- Dossier Databases: Dossier qui comporte les controllers et modèles des tables de la base de données.
+
+- Dossier DesignSystem : Nous avons opté pour une architecture type moléculaire, c'est à dire que la structuration de nos composants est très   détaillée. Il y a donc 3 catégories, les atoms qui sont les plus petits possible, ça peut être un logo, un texte, un titre. Ensuite nous avons les molécules, ça va être des composants un peu plus gros qui vont souvent utiliser les atoms, par exemple un bouton va contenir un logo ou un texte.
+Puis nous avons les organisms qui vont être composé de plusieurs molécules, par exemple un formulaire de connexion est composé de plusieurs champs, ainsi qu'un bouton.
+
+- Dossier pages : Ce dossier contient les pages de notre application, créer une page à la racine de ce dossier va créer une route à la racine du site.
+
+- Dossier services : Ce dossier contient les fonctions utiliser à plusieurs endroit dans notre application
+
+- Dossier styles : Ce dossier contient les styles globaux à toute l'application
+
+- Dossier Utils: Ce dossier contient les fonctions propres aux requêtes qu'on peut réutiliser.
+
