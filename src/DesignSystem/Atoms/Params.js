@@ -1,3 +1,5 @@
+//roue dentée en haut à gauche
+
 import React from 'react';
 
 const Params = () => {

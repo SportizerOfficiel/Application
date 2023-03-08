@@ -1,3 +1,5 @@
+//Point d'interrogation en haut à gauche
+
 import React from 'react';
 
 const Information = () => {

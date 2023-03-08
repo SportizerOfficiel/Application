@@ -1,13 +1,18 @@
 import Head from 'next/head'
 import Image from 'next/image'
+<<<<<<< HEAD
 import Cross from '../DesignSystem/Atoms/Cross'
 // import { Inter } from '@next/font/google'
 // import styles from '@/styles/Home.module.css'
+=======
+import { Inter } from '@next/font/google'
+>>>>>>> 5a2a37c193e868b67abb47eaa1c2375d4ea1b0fd
 
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
+<<<<<<< HEAD
     <>
       <Head>
         <title>Create Next App</title>
@@ -22,5 +27,8 @@ export default function Home() {
       {/* <main className={styles.main}>
       </main> */}
     </>
+=======
+    <></>
+>>>>>>> 5a2a37c193e868b67abb47eaa1c2375d4ea1b0fd
   )
 }
