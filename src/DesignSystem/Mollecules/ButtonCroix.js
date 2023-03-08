@@ -2,9 +2,11 @@ import React from 'react';
 
 const ButtonCroix = () => {
     return (
-        <Button>
-                <Croix></Croix>
-        </Button>
+        <>
+        </>
+        // <Button>
+        //         <Croix></Croix>
+        // </Button>
     );
 };
 
