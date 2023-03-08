@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SousTitre = ({ number }) => {
+const Score = ({ number }) => {
     return (
         <span>
             { number }
@@ -8,4 +8,4 @@ const SousTitre = ({ number }) => {
     );
 };
 
-export default SousTitre;
+export default Score;
