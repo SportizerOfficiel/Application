@@ -9,10 +9,10 @@ const TeamList = ({}) => {
             <table>
                 <thead>
                     <tr>
-                        <td>Nom d'équipe</td>
+                        <td>Nom d&apos;équipe</td>
                     </tr>
                     <tr>
-                        <td><input type='text' name='teamName' placeholder="Nom de l'équipe"/><Plus></Plus></td>
+                        <td><input type="text" name="teamName" placeholder="Nom de l'équipe"/><Plus></Plus></td>
                     </tr>
                 </thead>
                 <tbody>
