@@ -1,6 +1,9 @@
 import * as ClubsController from "../../../Databases/Controllers/ClubsController"
 import Status from "@/Utils/Status";
 
+/**
+ * requêtes des clubs sur l'api 
+ */
 export default async function handler(req, res) {
   const { method, body, query } = req;
   switch (method) {

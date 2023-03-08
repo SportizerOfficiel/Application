@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+/**
+ * Schéma de création d'un match dans la base de données
+ */
 const MatchSchema = new Schema({
   Date: { type: Date, required: true },
   Sport: { type: String, required: true },
