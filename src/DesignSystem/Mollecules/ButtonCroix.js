@@ -1,6 +1,6 @@
 import React from 'react';
 import Croix from '../Atoms/Croix';
-import Button from '../Atoms/Button';
+import Button from '../Atoms/Bouton';
 
 const ButtonCroix = () => {
     return (

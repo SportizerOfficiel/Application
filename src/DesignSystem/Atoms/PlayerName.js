@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerNum = () => {
+const PlayerName = () => {
     return (
         <span>
             { String }
@@ -8,4 +8,4 @@ const PlayerNum = () => {
     );
 };
 
-export default PlayerNum;
+export default PlayerName;

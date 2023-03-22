@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerNum = () => {
+const PlayerNum = ({number}) => {
     return (
         <span>
             { number }

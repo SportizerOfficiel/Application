@@ -2,7 +2,7 @@ import React from 'react';
 import InputNum from '../Atoms/InputNum';
 import InputPlayer from '../Atoms/InputPlayer';
 
-const Player = ({}) => {
+const PlayerConfig = ({}) => {
     return (
         <div>
             <InputPlayer></InputPlayer>
@@ -11,4 +11,4 @@ const Player = ({}) => {
     );
 };
 
-export default Player;
+export default PlayerConfig;

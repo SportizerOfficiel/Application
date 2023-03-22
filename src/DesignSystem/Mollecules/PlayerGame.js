@@ -1,14 +1,15 @@
 import React from 'react';
-import InputNum from '../Atoms/InputNum';
-import InputPlayer from '../Atoms/InputPlayer';
-import PlayerNum from '../Atoms/PlayerName';
+import PlayerName from '../Atoms/PlayerName';
+import PlayerNum from '../Atoms/PlayerNum';
 import PointRed from '../Atoms/PointRed';
+import PointJaune from '../Atoms/PointJaune';
+import Score from '../Atoms/Score';
 
 
 const jauneArray = [];
 const rougeArray = [];
 
-const Player = ({}) => {
+const PlayerGame = ({}) => {
     return (
         <div>
             <PlayerNum></PlayerNum>
@@ -28,4 +29,4 @@ const Player = ({}) => {
     );
 };
 
-export default Player;
+export default PlayerGame;

@@ -1,36 +1,32 @@
 import React from 'react';
 import PlayerConfig from '../Mollecules/PlayerConfig';
 import Plus from '../Atoms/Plus';
+import InputTeam from '../Atoms/InputTeam';
+import styled from 'styled-components';
+
+
+const PlayerContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 
 const TeamList = ({}) => {
     return (
         <div className="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <td><InputTeam></InputTeam></td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="teamName" placeholder="Nom de l'équipe"/><Plus></Plus></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Joueur</td>
-                        <td>N°</td>
-                    </tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                    <tr><td><PlayerConfig></PlayerConfig></td></tr>
-                </tbody>
-            </table>
+            <InputTeam></InputTeam>
+            <div>
+                <h3>Joueur</h3>
+                <h3>N°</h3>
+            </div>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
+            <PlayerConfig></PlayerConfig>
         </div>
     );
 };
