@@ -1,16 +1,16 @@
-import styled from 'styled-components';
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import Bouton from '@/DesignSystem/Atoms/Bouton';
-import TeamListGame from '@/DesignSystem/Organisms/TeamListGame';
 import TeamListConfig from '@/DesignSystem/Organisms/TeamListConfig';
+import TeamListGame from '@/DesignSystem/Organisms/TeamListGame';
 import Chrono from '@/DesignSystem/Mollecules/Chrono';
 import BoutonBuzzer from '@/DesignSystem/Mollecules/BoutonBuzzer';
 
 
 const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+display: flex;
+flex-direction: column;
+align-items: center;
 `;
 
 const Remote = () => {
@@ -21,22 +21,22 @@ const Remote = () => {
     }
     if(!inGame){
         return (
-            <div>
-                <TeamListConfig></TeamListConfig>
-                <TeamListConfig></TeamListConfig>
+            <ButtonContainer>
+                <TeamListConfig/>
+                <TeamListConfig/>
                 <Bouton text="Créer le Match" onClick={handleGame}></Bouton>
-            </div>
+            </ButtonContainer>
         );
     } else {
         return (
-            <div>
-                <TeamListGame></TeamListGame>
-                <ButtonContainer>
-                    <Chrono></Chrono>
-                    <Bouton text="Correction"></Bouton>
-                </ButtonContainer>
-                <TeamListGame></TeamListGame>
-            </div>
+            <ButtonContainer>
+            <TeamListGame></TeamListGame>
+            <ButtonContainer>
+                <Chrono></Chrono>
+                <Bouton text="Correction"></Bouton>
+            </ButtonContainer>
+            <TeamListGame></TeamListGame>
+        </ButtonContainer>
         );
     }
 };
