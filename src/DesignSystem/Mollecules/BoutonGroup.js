@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Bouton from '@/DesignSystem/Atoms/Bouton';
+import Chrono from './Chrono';
 
 
 const ButtonContainer = styled.div`
@@ -14,9 +15,9 @@ function BoutonGroup(props) {
 
   return (
     <ButtonContainer>
+        <Chrono></Chrono>
         <Bouton text="Correction"></Bouton>
         <Bouton text="Buzzer 🔊"></Bouton>
-        <Bouton text="Temps-mort 1:00"></Bouton>
     </ButtonContainer>
   );
 }
