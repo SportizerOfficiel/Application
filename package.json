@@ -28,6 +28,7 @@
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
     "gsap": "^3.11.4",
+    "howler": "^2.2.3",
     "include-media": "^2.0.0",
     "lil-gui": "^0.17.0",
     "mobile-detect": "^1.4.5",

@@ -19,14 +19,20 @@ function Chrono() {
     clearInterval(intervalRef.current);
     setTimeout(() => {
       startTimer();
-    }, 5000);
+    }, 60000);
+  };
+
+  const formatTime = (timeInSeconds) => {
+    const date = new Date(timeInSeconds * 1000);
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
   };
 
   return (
     <div>
-      <h1>{time}</h1>
-      <Bouton onClick={pauseTimer}>
-        Temps-mort 1:00
+      <h1>{formatTime(time)}</h1>
+      <Bouton text="Temps-mort 1:00" onClick={pauseTimer}>
       </Bouton>
     </div>
   );

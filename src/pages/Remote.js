@@ -1,26 +1,40 @@
+import styled from 'styled-components';
+import React, { useState } from 'react';
+import Bouton from '@/DesignSystem/Atoms/Bouton';
 import TeamListGame from '@/DesignSystem/Organisms/TeamListGame';
 import TeamListConfig from '@/DesignSystem/Organisms/TeamListConfig';
-import Bouton from '@/DesignSystem/Atoms/Bouton';
-import React from 'react';
-import BoutonGroup from '@/DesignSystem/Mollecules/BoutonGroup';
+import Chrono from '@/DesignSystem/Mollecules/Chrono';
+import BoutonBuzzer from '@/DesignSystem/Mollecules/BoutonBuzzer';
 
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const Remote = () => {
-    
-    let inGame = 1;
-    if(inGame == 0){
+    const [inGame, setGame] = useState(false)
+
+    function handleGame(){
+        setGame(!inGame);
+    }
+    if(!inGame){
         return (
             <div>
                 <TeamListConfig></TeamListConfig>
                 <TeamListConfig></TeamListConfig>
-                <Bouton text="Créer le Match"></Bouton>
+                <Bouton text="Créer le Match" onClick={handleGame}></Bouton>
             </div>
         );
     } else {
         return (
             <div>
                 <TeamListGame></TeamListGame>
-                <BoutonGroup></BoutonGroup>
+                <ButtonContainer>
+                    <Chrono></Chrono>
+                    <Bouton text="Correction"></Bouton>
+                </ButtonContainer>
                 <TeamListGame></TeamListGame>
             </div>
         );
