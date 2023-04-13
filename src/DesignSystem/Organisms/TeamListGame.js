@@ -75,7 +75,7 @@ const TeamListGame = ({}) => {
                                 {equipe1.slice(5,50).map(joueur => 
                                     <PlayerGame number={joueur.num} name={joueur.name} apparait={0}></PlayerGame>
                                 )}
-                                <button onClick={closePopup}>Fermer</button>
+                                <Bouton onClick={closePopup} text={'Fermer'}></Bouton>
                             </ContentPopup>
                         </StyledPopup>
                     )}
