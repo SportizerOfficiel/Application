@@ -1,9 +1,9 @@
 import React from 'react';
 
-const PlayerName = () => {
+const PlayerName = ({name}) => {
     return (
         <span>
-            { String }
+            { name }
         </span>
     );
 };

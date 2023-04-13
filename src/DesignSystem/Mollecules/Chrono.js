@@ -32,8 +32,7 @@ function Chrono() {
   return (
     <div>
       <h1>{formatTime(time)}</h1>
-      <Bouton text="Temps-mort 1:00" onClick={pauseTimer}>
-      </Bouton>
+      <Bouton text="Temps-mort 1:00" onClick={pauseTimer}/>
     </div>
   );
 }

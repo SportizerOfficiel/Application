@@ -14,7 +14,7 @@ function BoutonBuzzer() {
   
     return (
       <div>
-        <Bouton text="Buzzer 🔊" onClick={playSound}></Bouton>
+        <Bouton text="Buzzer 🔊"></Bouton>
       </div>
     );
   }

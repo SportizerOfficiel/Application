@@ -1,0 +1,51 @@
+[
+    {
+        "num": 21,
+        "name": "Embiid",
+        "jaune": 2, 
+        "rouge": 0, 
+        "score": 45
+    },
+    {
+        "num": 15,
+        "name": "Jokic",
+        "jaune": 0, 
+        "rouge": 0, 
+        "score": 20
+    },
+    {
+        "num": 34,
+        "name": "Antetoukoumpo",
+        "jaune": 0, 
+        "rouge": 1, 
+        "score": 32
+    },
+    {
+        "num": 10,
+        "name": "Fournier",
+        "jaune": 0, 
+        "rouge": 0, 
+        "score": 17
+    },
+    {
+        "num": 77,
+        "name": "Doncic",
+        "jaune": 0, 
+        "rouge": 0, 
+        "score": 23
+    },
+    {
+        "num": 27,
+        "name": "Gobert",
+        "jaune": 0, 
+        "rouge": 0, 
+        "score": 0
+    },
+    {
+        "num": 88,
+        "name": "Batum",
+        "jaune": 0, 
+        "rouge": 0, 
+        "score": 0
+    }
+]

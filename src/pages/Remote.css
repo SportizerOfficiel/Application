@@ -1,0 +1,55 @@
+.App {
+    text-align: center;
+  }
+  
+  .class {
+    background-color: yellow;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px;
+    display: 'flex'; 
+  }
+  
+  .my-class {
+    text-align: center;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  .myclass{
+      background-color: white;
+      width:200px;
+      border: 5px solid yellow;
+      border-radius: 30px;
+      /*margin-top: 25px;*/
+      flex: 2;
+  }
+  
+  .myclass2{
+    height: 80%; /* hauteur de la div */
+    width: 80%; /* largeur de la div */
+    margin: auto; /* centrer horizontalement */
+    margin-top: 5%; /* ajouter une marge en haut */
+    margin-bottom: 10%; /* ajouter une marge en bas */
+    text-align: center;
+    background-color: yellow;
+    border: 5px solid yellow;
+    border-radius: 10px;
+    border-radius: 10px;
+    flex: 1;
+    margin-right: 30px;
+    margin-left: 30px;
+  }
+  
+  .myclass3{
+    color: white;
+    white-space: nowrap;
+    margin-left: 40px;
+  }

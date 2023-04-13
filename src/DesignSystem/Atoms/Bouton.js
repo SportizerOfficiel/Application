@@ -16,7 +16,7 @@ const StyledButton = styled.button`
   }
 `;
 
-function Button(props) {
+function Bouton(props) {
   const { text, onClick, disabled } = props;
 
   return (
@@ -26,4 +26,4 @@ function Button(props) {
   );
 }
 
-export default Button;
+export default Bouton;

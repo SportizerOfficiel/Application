@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Score = ({ number }) => {
+const Score = ({ score }) => {
     return (
         <span>
-            { number }
+            { score }
         </span>
     );
 };
