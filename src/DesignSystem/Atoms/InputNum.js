@@ -1,8 +1,8 @@
 import React from 'react';
 
-const InputNum = () => {
+const InputNum = ({valeur}) => {
     return (
-        <input type='number' name='inputNum' placeholder='N°'/>
+        <input type='number' value={valeur} placeholder='N°'/>
     );
 };
 

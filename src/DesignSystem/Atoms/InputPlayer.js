@@ -1,8 +1,8 @@
 import React from 'react';
 
-const InputPlayer = () => {
+const InputPlayer = ({valeur}) => {
     return (
-        <input type='text' name='inputPlayer' placeholder='Nom'/>
+        <input type='text' value={valeur} placeholder='Nom'/>
     );
 };
 

@@ -8,25 +8,15 @@ import Bouton from '../Atoms/Bouton';
 import Score from '../Atoms/Score';
 
 
-const PlayerGame = ({number, name, jaune, rouge, score, apparait, fonction}) => {
-    if(apparait=1){
-        return (
-            <div>
-                <PlayerNum number={number}/><span>. </span>
-                <PlayerName name={name}/>
-                <Bouton onClick={fonction}></Bouton>
-                <Score score={score}/><br/><br/>
-            </div>
-        );
-    } else {
-        return (
-            <div>
-                <PlayerNum number={number}/><span>. </span>
-                <PlayerName name={name}/>
-                <Score score={score}/><br/><br/>
-            </div>
-        );
-    }
+const PlayerGame = ({number, name, jaune, rouge, score, fonction}) => {
+    return (
+        <div>
+            <PlayerNum number={number}/><span>. </span>
+            <PlayerName name={name}/>
+            <Bouton onClick={fonction}></Bouton>
+            <Score score={score}/><br/><br/>
+        </div>
+    );
 };
 /*{jauneArray&&(jauneArray.forEach(jaune => (
                 <li>
