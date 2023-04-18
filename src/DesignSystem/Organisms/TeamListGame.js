@@ -158,7 +158,7 @@ const TeamListGame = ({}) => {
     };
     
     return (
-        <div style={{ textAlign: 'center' }}>
+    <div style={{ textAlign: 'center' }}>
       <div>
         <div style={{ display: 'inline-block' }}>
           <h1>MEUDON</h1>
@@ -195,7 +195,7 @@ const TeamListGame = ({}) => {
                     <p><button className="class">Correction</button></p>
                     <p><button className="class">Buzzer</button></p>
                     <Chrono/>
-                    <h2>4</h2>
+                    <h2>1</h2>
                 </div>
                 <div className="myclass3" style={{ display: 'inline'}}>
                     {equipe2.slice(0,5).map(joueur => 

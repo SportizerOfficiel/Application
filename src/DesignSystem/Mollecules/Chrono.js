@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Bouton from '@/DesignSystem/Atoms/Bouton';
+import Text from '@/DesignSystem/Atoms/Text';
 
 function Chrono() {
   const [time, setTime] = useState(0);
@@ -28,7 +29,7 @@ function Chrono() {
     const seconds = date.getSeconds().toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
   };
-
+  
   return (
     <div>
       <h1>{formatTime(time)}</h1>
