@@ -1,6 +1,6 @@
 import React from 'react';
 import Popup from 'reactjs-popup';
-import Bouton from '@/DesignSystem/Atoms/Bouton';
+import Bouton from '@/DesignSystem/Atoms/Button';
 import 'reactjs-popup/dist/index.css';
 
 const ChangePopup = ({}) => {

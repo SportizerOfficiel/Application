@@ -4,7 +4,7 @@ import PlayerGame from '../Mollecules/PlayerGame';
 import ChangePopup from '../Mollecules/ChangePopup';
 import Score from '../Atoms/Score';
 import Chrono from '../Mollecules/Chrono';
-import Bouton from '../Atoms/Bouton';
+import Bouton from '../Atoms/Button';
 
 
 const StyledPopup = styled.div`
@@ -159,7 +159,7 @@ const TeamListGame = ({}) => {
     
     return (
     <div style={{ textAlign: 'center' }}>
-      <div>
+      {/* <div>
         <div style={{ display: 'inline-block' }}>
           <h1>MEUDON</h1>
         </div>
@@ -225,7 +225,7 @@ const TeamListGame = ({}) => {
         <p style={{ marginLeft: '100px', fontSize: '50px' }}>
             <Score score={totalPoints(equipe2)}></Score>
         </p>
-      </div>
+      </div> */}
     </div>
     );
 };

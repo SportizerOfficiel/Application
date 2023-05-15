@@ -1,0 +1,30 @@
+
+
+%text-typographie {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 400;
+}
+.text-xl {
+    @extend %text-typographie;
+    font-size: pxToRem(20px);  // Assuming 20px for xl text
+}
+
+.text-l {
+    @extend %text-typographie;
+    font-size: pxToRem(18px);  // Assuming 18px for l text
+}
+
+.text-m {
+    @extend %text-typographie;
+    font-size: pxToRem(16px);  // Assuming 16px for m text
+}
+
+.text-s {
+    @extend %text-typographie;
+    font-size: pxToRem(14px);  // Assuming 14px for s text
+}
+
+.text-xs {
+    @extend %text-typographie;
+    font-size: pxToRem(12px);  // Assuming 12px for xs text
+}

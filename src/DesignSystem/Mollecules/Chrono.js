@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Bouton from '@/DesignSystem/Atoms/Bouton';
+import Bouton from '@/DesignSystem/Atoms/Button';
 import Text from '@/DesignSystem/Atoms/Text';
 
 function Chrono() {

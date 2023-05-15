@@ -10,6 +10,8 @@ export default async function handler(req, res) {
     case "GET":
       if (query.id) {
         return await PlayersController.getPlayersById({ id: query.id, res });
+      } else if (query.search) {
+        return await PlayersController.searchPlayers({  body, res });
       } else {
         return await PlayersController.getPlayers({ res });
       }

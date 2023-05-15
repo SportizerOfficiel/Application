@@ -4,7 +4,7 @@ import PlayerName from '../Atoms/PlayerName';
 import PlayerNum from '../Atoms/PlayerNum';
 import PointRed from '../Atoms/PointRed';
 import PointJaune from '../Atoms/PointJaune';
-import Bouton from '../Atoms/Bouton';
+import Bouton from '../Atoms/Button';
 import Score from '../Atoms/Score';
 
 

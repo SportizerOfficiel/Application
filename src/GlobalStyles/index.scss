@@ -1,0 +1,31 @@
+/*---------------------------------------------
+              INIT & HELPERS 
+-----------------------------------------------*/
+@import "./Utils/Reset";
+@import "./Utils/Functions";
+@import "./Utils/ZIndex";
+@import "./Utils/Mixins";
+@import "./Utils/Responsive";
+@import "./Utils/Animations";
+@import "./Fonts/Fonts.scss";
+/*---------------------------------------------
+            SHARED VARIABLES
+-----------------------------------------------*/
+@import "./Variables/Easings.scss";
+@import "./Variables/Colors.scss";
+@import "./Variables/Spacing.scss";
+@import "./Variables/Title.scss";
+@import "./Variables/Text.scss";
+
+/*---------------------------------------------
+              BASE STYLES
+-----------------------------------------------*/
+@import "./Base/Base";
+/*---------------------------------------------
+      ONLY SHARED COMPONENT LIKE BUTTON ETC..
+-----------------------------------------------*/
+
+
+
+/*COMPO*/
+

@@ -1,0 +1,20 @@
+// Define spacing variables
+$spacing-xs: pxToRem(8px);   // ~0.5rem
+$spacing-s: pxToRem(16px);   // ~1rem
+$spacing-m: pxToRem(24px);   // ~1.5rem
+$spacing-l: pxToRem(32px);   // ~2rem
+$spacing-xl: pxToRem(42px);  // ~2.625rem
+$spacing-xxl: pxToRem(56px); // ~3.5rem
+$spacing-3xl: pxToRem(64px); // ~4rem
+$spacing-4xl: pxToRem(72px); // ~4.5rem
+
+:root {
+  --s8: #{$spacing-xs};
+  --s16: #{$spacing-s};
+  --s24: #{$spacing-m};
+  --s32: #{$spacing-l};
+  --s42: #{$spacing-xl};
+  --s56: #{$spacing-xxl};
+  --s64: #{$spacing-3xl};
+  --s72: #{$spacing-4xl};
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Howl } from 'howler';
-import Bouton from '@/DesignSystem/Atoms/Bouton';
+import Bouton from '@/DesignSystem/Atoms/Button';
 
 function BoutonBuzzer() {
     const audioFile = "../public/bball_buzzer.wav";

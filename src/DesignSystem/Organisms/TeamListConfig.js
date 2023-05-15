@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import PlayerConfig from '../Mollecules/PlayerConfig';
 import InputTeam from '../Atoms/InputTeam';
-import Bouton from '../Atoms/Bouton';
+import Bouton from '../Atoms/Button';
 import styled from 'styled-components';
 
 

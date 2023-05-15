@@ -1,6 +1,6 @@
 import React from 'react';
 import Cross from '../Atoms/Cross';
-import Button from '../Atoms/Bouton';
+import Button from '../Atoms/Button';
 
 const ButtonCroix = () => {
     return (

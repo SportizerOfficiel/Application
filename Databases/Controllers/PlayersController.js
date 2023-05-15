@@ -57,4 +57,14 @@ const deletePlayersById = HandleRequest(async ({ body, id }) => {
   return data;
 });
 
-export { getPlayers, getPlayersById, putPlayersById, postPlayers, deletePlayersById };
+/**
+ * Recherche des joueurs
+ */
+ const searchPlayers = HandleRequest(async ({ body }) => {
+  await dbConnect();
+  console.log("searching",data)
+  const data = await Players.find({ Name: { $regex: body, $options: 'i' } });
+  return data;
+});
+
+export { getPlayers, getPlayersById, putPlayersById, postPlayers, deletePlayersById,searchPlayers };

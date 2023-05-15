@@ -1,0 +1,18 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+
+@font-face {
+    font-family: 'Lab Grotesque Regular';
+    src: url('./LabGrotesque/LabGrotesque-Regular.eot');
+    src: url('./LabGrotesque/LabGrotesque-Regular.eot?#iefix') format('embedded-opentype'),
+    url('./LabGrotesque/LabGrotesque-Regular.woff') format('woff'),
+    url('./LabGrotesque/LabGrotesque-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    }
+
+    *{
+        font-family: 'Lab Grotesque Regular'!important;
+    }

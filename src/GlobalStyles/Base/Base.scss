@@ -1,0 +1,166 @@
+:root{
+  --app-height:100%;
+  --app-width:100%;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+html {
+  // Default font size
+  font-size: 100%; // equivalent to 16px
+
+  // Adjust font size for mobile screens
+  @include media("<phone") {
+    font-size: 75%; // 75% of 16px = 12px
+  }
+
+  // Adjust font size for large screens
+  @include media(">desktopLarge") {
+    font-size: 125%; // 125% of 16px = 20px
+  }
+}
+
+
+body {
+  width: 100%;
+  position: relative;
+}
+
+body,
+html ,#__next{
+
+  height: var(--app-height);
+  width: var(--app-width);
+
+}
+.pointer {
+  cursor: pointer;
+}
+
+
+[data-template]{
+  position: absolute;
+ 
+}
+
+// a {
+//   color: inherit;
+//   outline: none;
+//   text-decoration: none;
+//   border-bottom: 1px solid blue;
+// }
+// button {
+//   padding: 0;
+//   background: none;
+//   border: none;
+//   color: inherit;
+//   cursor: pointer;
+//   outline: none;
+// }
+.cover {
+  @extend %cover;
+}
+.center {
+  @extend %center;
+}
+.column {
+  @extend %column;
+}
+img,
+video {
+  // opacity: 0;
+  transition: opacity 0.4s ease;
+  vertical-align: middle;
+  user-select: none;
+  pointer-events: none;
+  &.loaded {
+    opacity: 1;
+  }
+}
+.noevent {
+  pointer-events: none !important;
+}
+main {
+  position: relative;
+  width: var(--app-width);
+  height: var(--app-height);
+  z-index: z("main");
+}
+.destroy {
+  display: none !important;
+}
+.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+img[data-canvas] {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.debug {
+  overflow-x: visible;
+  overflow-y: visible;
+  transform: scale(0.1) !important;
+  & div {
+    visibility: visible !important;
+  }
+}
+
+.red {
+  background-color: red;
+  color: red;
+}
+.green {
+  background-color: green;
+  color: green;
+}
+.purple {
+  background-color: purple;
+  color: purple;
+}
+.blue {
+  background-color: blue;
+  color: blue;
+}
+.FlexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.dg.ac {
+  z-index: 99999 !important;
+}
+
+
+.loading{
+  cursor:progress;
+}
+.grabbing {
+  cursor: grabbing ;
+  cursor: -webkit-grabbing ;
+}
+.grab {
+  cursor: grab;
+  cursor: -webkit-grab;
+}
+
+.NOEVENT *{
+  pointer-events: none!important;
+}
+
+

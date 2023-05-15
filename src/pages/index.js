@@ -1,3 +1,4 @@
+
 import Head from 'next/head'
 import Image from 'next/image'
 import Cross from '../DesignSystem/Atoms/Cross'
@@ -15,10 +16,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div>
-        <Cross/>
-        test
-      </div>
+     
       {/* <main className={styles.main}>
       </main> */}
     </>
