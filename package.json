@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "populate": "node FakeData.js"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -15,6 +16,7 @@
     "@mantine/form": "^6.0.10",
     "@mantine/hooks": "^6.0.10",
     "@mantine/modals": "^6.0.10",
+    "@mantine/next": "^6.0.10",
     "@mantine/notifications": "^6.0.10",
     "@mantine/nprogress": "^6.0.10",
     "@next/font": "13.1.6",
@@ -28,20 +30,26 @@
     "embla-carousel-react": "^7.1.0",
     "eslint": "8.33.0",
     "eslint-config-next": "13.1.6",
+    "faker": "^6.6.6",
     "fs": "^0.0.1-security",
     "gsap": "^3.11.4",
     "howler": "^2.2.3",
+    "i18next": "^22.4.15",
     "include-media": "^2.0.0",
     "jsonwebtoken": "^9.0.0",
     "lil-gui": "^0.17.0",
     "mobile-detect": "^1.4.5",
     "mongodb": "^5.0.0",
     "mongoose": "^6.9.0",
+    "mongoose-fakery": "^0.1.7",
     "net": "^1.0.2",
     "next": "13.1.6",
+    "next-i18next": "^13.2.2",
     "next-pwa": "^5.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-i18next": "^12.2.2",
+    "react-intl": "^6.4.2",
     "reactjs-popup": "^2.0.5",
     "sass": "^1.58.0",
     "scss": "^0.2.4",
@@ -49,5 +57,8 @@
     "styled-components": "^5.3.6",
     "tls": "^0.0.1",
     "ws": "^8.12.0"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^8.0.1"
   }
 }

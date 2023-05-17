@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       if (query.id) {
         return await PlayersController.getPlayersById({ id: query.id, res });
       } else if (query.search) {
-        return await PlayersController.searchPlayers({  body, res });
+        return await PlayersController.searchPlayersByName({ body:query.search, res });
       } else {
         return await PlayersController.getPlayers({ res });
       }

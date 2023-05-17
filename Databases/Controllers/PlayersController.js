@@ -57,14 +57,20 @@ const deletePlayersById = HandleRequest(async ({ body, id }) => {
   return data;
 });
 
+
 /**
- * Recherche des joueurs
+ * Recherche de joueurs par nom
  */
- const searchPlayers = HandleRequest(async ({ body }) => {
+ const searchPlayersByName = HandleRequest(async ({body}) => {
   await dbConnect();
-  console.log("searching",data)
-  const data = await Players.find({ Name: { $regex: body, $options: 'i' } });
+
+  //Vous pouvez utiliser une expression régulière pour effectuer une recherche insensible à la casse
+  const regex = new RegExp(body, 'i'); 
+
+  const data = await Players.find({ Name: regex });
+
   return data;
 });
 
-export { getPlayers, getPlayersById, putPlayersById, postPlayers, deletePlayersById,searchPlayers };
+
+export { getPlayers, getPlayersById, putPlayersById, postPlayers, deletePlayersById,searchPlayersByName };

@@ -22,7 +22,7 @@ const  InputPassword = ({ className, style, ...props}) => {
           Forgot your password?
         </Anchor>
       </Group>
-      <PasswordInput placeholder="Your password" id="your-password" name='password' {...props} />
+      <PasswordInput placeholder="Your password" id="your-password" name='Password' {...props} />
     </div>
   );
 }

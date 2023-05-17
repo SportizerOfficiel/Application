@@ -23,8 +23,8 @@ const Register = () => {
       <div>
         <h2>Register</h2>
         <form ref={registerFormRef} onSubmit={handleRegisterSubmit}>
-          <input name="email" type="email" placeholder="Email" required />
-          <input name="password" type="password" placeholder="Password" required />
+          <input name="Email" type="email" placeholder="Email" required />
+          <input name="Password" type="password" placeholder="Password" required />
           <button type="submit">Register</button>
         </form>
         {error && <p>{error}</p>}

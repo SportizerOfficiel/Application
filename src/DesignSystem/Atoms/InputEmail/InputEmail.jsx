@@ -26,7 +26,7 @@ const  InputEmail = ()=>{
     <Autocomplete
       value={value}
       data={data}
-      name="email"
+      name="Email"
       required
       type="email"
       onChange={handleChange}

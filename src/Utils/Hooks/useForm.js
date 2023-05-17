@@ -5,6 +5,9 @@ const useForm = (FormAction)=>{
 const FormRef = useRef(null)
     
 const handleSubmit = (event) => {
+  if (!event) {
+    event = { preventDefault: () => {}, target: FormRef.current };
+  }
   event.preventDefault();
   const formData = new FormData(event.target);
   const data = {};

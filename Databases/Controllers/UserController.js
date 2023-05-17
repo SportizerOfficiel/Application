@@ -16,17 +16,17 @@ const SALT_ROUNDS = 10;
  */
 const postUser = HandleRequest(async ({ body }) => {
   await dbConnect();
-  const { email, password } = body;
+  const { Email, Password } = body;
 
-  if (!email || !password) throw new Error("Email or password is missing");
+  if (!Email || !Password) throw new Error("Email or Password is missing");
 
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ Email });
 
   if (existingUser) throw new Error("Email already exists");
 
-  const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+  const hashedPassword = await bcrypt.hash(Password, SALT_ROUNDS);
 
-  const newUser = new User({ email, password: hashedPassword });
+  const newUser = new User({ Email, Password: hashedPassword });
   return await newUser.save();
 });
 
@@ -79,19 +79,19 @@ const deleteUserById = HandleRequest(async ({ body, id }) => {
  */
 const login = HandleRequest(async ({ body }) => {
   await dbConnect();
-  const { email, password } = body;
+  const { Email, Password } = body;
 
-  if (!email || !password) throw new Error("Email or password is missing");
+  if (!Email || !Password) throw new Error("Email or Password is missing");
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ Email });
 
   if (!user) throw new Error("User not found");
 
-  const isPasswordValid = await bcrypt.compare(password, user.password);
+  const isPasswordValid = await bcrypt.compare(Password, user.Password);
 
-  if (!isPasswordValid) throw new Error("Invalid password");
+  if (!isPasswordValid) throw new Error("Invalid Password");
 
-  const token = jwt.sign({ userId: user._id,email:user.email }, SECRET_KEY, {
+  const token = jwt.sign({ userId: user._id,Email:user.Email }, SECRET_KEY, {
     expiresIn: "1h",
   });
 

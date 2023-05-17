@@ -1,0 +1,6 @@
+export const getrandomInt = (max) => {
+  return Math.floor(Math.random() * Math.floor(max));
+};
+export const GenerateKey = () => {
+    return `${getrandomInt(999999999)}${getrandomInt(999999999)}${getrandomInt(999999999)}`;
+  };

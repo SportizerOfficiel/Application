@@ -32,9 +32,14 @@ const RemotePin = () => {
   
     <Box component="form" 
     sx={(theme) => ({
-      width:"100%"
+      width:"100%",
+      height:"100%",
+      display:"flex",
+      justifyContent:"center",
+      alignItems:"center",
+      paddingBottom:"10%"
     })} ref={PinFormRef} onSubmit={handleLoginSubmit}>
-      <Container miw={420} size="xs" my={40}>
+      <Container miw={420} size="xs">
         <Title
           align="center"
           sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}

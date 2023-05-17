@@ -6,6 +6,12 @@ import useForm from "@/Utils/Hooks/useForm";
 import RemotePin from "@/DesignSystem/Organisms/RemotePin/RemotePin";
 import NavbarSimple from "@/DesignSystem/Organisms/NavBar/NavBar";
 import Match from "@/Components/Views/Match";
+import PlayerAutocomplete from "@/DesignSystem/Organisms/Players/PlayerAutocomplete";
+
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { Box } from "@mantine/core";
+
+
 
 const Remote = (props) => {
   const { user, logout } = useAuth();
@@ -20,16 +26,19 @@ const Remote = (props) => {
     { link: '/Disconnect', label: 'Déconnexion',action:()=>{setInterface("Disconnect")}  },
   ];
     return (
-      <div>
+      <>
         {!RemoteConnected && <RemotePin></RemotePin>}
         {RemoteConnected &&   <>
         <NavbarSimple links={links}></NavbarSimple>
-        <div style={{ display: Interface === "Match" ? "block" : "none" }}>
+        <Box  sx={(theme) => ({
+            width: "100%",
+            height: "100%",
+            display: Interface === "Match" ? "block" : "none"
+          })}>
           <Match></Match>
-        </div>
-      
+        </Box>
         </>}
-      </div>
+      </>
     );
 
 
@@ -38,35 +47,17 @@ const Remote = (props) => {
 export default Remote;
 
 
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      // Will be passed to the page component as props
+    },
+  };
+}
 
 
 
-// const Login = () => {
-//     const [error, setError] = React.useState("");
-//     const router = useRouter()
-//     const loginUser = async (data) => {
-//       setError("");
-//       try {
-//         const response = await axios.post("/api/User", data, { params: { login: true } });
-//         const { token } = response.data;
-//         localStorage.setItem('jwt', token);
-//         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//         resetForm();
-//         router.replace('/Remote');
-//       } catch (error) {
-//         console.log(error)
-       
-//       }
-//     };
-  
-  
-//     return (
-  
-//     );
-//   };
-
-  
-//   export default Login
 
 
  

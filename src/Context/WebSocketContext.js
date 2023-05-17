@@ -12,8 +12,9 @@ export const useWebSocket = () => {
 
 export const WebSocketProvider = ({ children }) => {
   const [key, setKey] = useState("");
+
   const [receivedMessages, setReceivedMessages] = useState([]);
-  const [RemoteConnected, setRemoteConnected] = useState(false);
+  const [RemoteConnected, setRemoteConnected] = useState(true);
   const [error, setError] = useState(null);
   const [loading, setloading] = useState(false);
 
@@ -90,7 +91,8 @@ export const WebSocketProvider = ({ children }) => {
     sendMessage,
     receivedMessages,
     RemoteConnected,
-    error,loading,setError
+    error,loading,setError,
+
   };
 
   return <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>;

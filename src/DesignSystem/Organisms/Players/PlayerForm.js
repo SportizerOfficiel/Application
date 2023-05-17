@@ -1,10 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { Button, Container, Paper, Text } from '@mantine/core';
-import useForm from '@/Utils/Hooks/useForm';
-import PlayerAutocomplete from './PlayerAutocomplete';
+/** @format */
 
-const PlayerForm = () => {
-  const [players, setPlayers] = useState([{}]);
+import React, { useState, useRef } from "react";
+import { Button, Container, Flex, Paper, Text } from "@mantine/core";
+import PlayerAutocomplete from "./PlayerAutocomplete.js";
+import { IconTrash } from "@tabler/icons-react";
+
+export default function PlayerForm({ label = "", numberPlayer = 0, DATAPlayers = [] }) {
+  const [players, setPlayers] = useState([]);
 
   const handleInputChange = (index, value) => {
     const newPlayers = [...players];
@@ -26,28 +28,42 @@ const PlayerForm = () => {
     // Ajoutez ici la logique pour ajouter des joueurs
     console.log(data);
   };
-  const [FormRef, handleSubmit, resetForm] = useForm(addPlayers);
+  React.useEffect(() => {
+    if (DATAPlayers.length === 0) {
+      const tableau = Array.from({ length: numberPlayer }, (_, i) => ({ id: i }));
+      setPlayers(tableau);
+    }
+
+    if (DATAPlayers.length > 0) {
+      setPlayers(DATAPlayers);
+    }
+  }, [numberPlayer, DATAPlayers]);
 
   return (
-    <Container>
+    <Container >
       <Text weight={700} size="lg" mb="md">
-        Ajouter des joueurs
+        {label}
       </Text>
-      <form ref={FormRef} onSubmit={handleSubmit}>
-        {players.map((player, index) => (
-          <Paper padding="md" mb="md" key={index}>
-            <PlayerAutocomplete
-            />
-            <Button color="red" onClick={() => handleRemovePlayer(index)}>
-              Supprimer
-            </Button>
-          </Paper>
-        ))}
-        <Button onClick={()=>handleAddPlayer()}>Ajouter un joueur</Button>
-        <Button type="submit">Envoyer</Button>
-      </form>
+
+      {players.map((player, index) => (
+        <Flex padding="md" mb="md" key={label + "_" + index}>
+          <PlayerAutocomplete name={label + "_" + player.name} label={label} player={player}/>
+          <Button
+            color="red"
+            onClick={() => handleRemovePlayer(index)}
+            sx={(theme) => ({
+              paddingLeft: "0.7rem",
+              paddingRight: "0.7rem",
+              marginLeft: "1rem",
+            })}
+          >
+            <IconTrash size="1rem"></IconTrash>
+          </Button>
+        </Flex>
+      ))}
+      <Flex justify="center">
+        <Button onClick={() => handleAddPlayer()}>Ajouter un joueur</Button>
+      </Flex>
     </Container>
   );
-};
-
-export default PlayerForm;
+}

@@ -13,6 +13,7 @@ const Sign = () => {
       width:"100%",
       height:"100%"
     })}>
+      {/* <Register></Register> */}
     <Login ></Login>
    </Box>
   );
