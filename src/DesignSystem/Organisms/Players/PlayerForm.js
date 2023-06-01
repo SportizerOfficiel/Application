@@ -47,7 +47,7 @@ export default function PlayerForm({ label = "", numberPlayer = 0, DATAPlayers =
 
       {players.map((player, index) => (
         <Flex padding="md" mb="md" key={label + "_" + index}>
-          <PlayerAutocomplete name={label + "_" + player.name} label={label} player={player}/>
+          <PlayerAutocomplete name={label + "_" + player.name} label={label} player={player} index={index}/>
           <Button
             color="red"
             onClick={() => handleRemovePlayer(index)}

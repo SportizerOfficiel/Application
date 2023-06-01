@@ -39,7 +39,7 @@ const RemotePin = () => {
       alignItems:"center",
       paddingBottom:"10%"
     })} ref={PinFormRef} onSubmit={handleLoginSubmit}>
-      <Container miw={420} size="xs">
+      <Container miw={420} >
         <Title
           align="center"
           sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900 })}
@@ -50,9 +50,9 @@ const RemotePin = () => {
           Do not have an account yet?
         </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md"  sx={(theme) => ({ width:"fit-content" })}>
         <Group position="center">
-          <PinInput ref={PinRef} size="xl" length={6} name="pin" error={error} autoFocus ></PinInput>
+          <PinInput ref={PinRef} size="xl" length={6} name="pin" error={error} autoFocus sx={(theme) => ({ fontWeight: 900  })}></PinInput>
         </Group>
        
           {error && <Text mb="lg" color="red">

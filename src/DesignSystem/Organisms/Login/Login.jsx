@@ -25,7 +25,6 @@ const Login = () => {
     const loginUser = async (data) => {
       setError("");
       try {
-        console.log(data)
         const response = await axios.post("/api/User", data, { params: { login: true } });
         const { token } = response.data;
         localStorage.setItem('jwt', token);
@@ -33,7 +32,6 @@ const Login = () => {
         resetForm();
         router.replace('/Remote');
       } catch (error) {
-        console.log(error)
         setError(error.response.data)
       }
     };

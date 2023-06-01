@@ -77,7 +77,6 @@ const deleteClubsById = HandleRequest(async ({ body, id }) => {
  */
  const getLastMatchPlayersByClubAndCateg = HandleRequest(async ({ body, id }) => {
   await dbConnect();
-    console.log("OKEYFEFE")
   // Retrieve the club data
   const club = await Clubs.findById(id);
   if (!club) throw new Error("Club not found");

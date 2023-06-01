@@ -31,6 +31,9 @@ function useSocket() {
     socket.on('message', (message) => {
       console.log(`Received message:`, message);
     });
+    socket.on('instance', (instance) => {
+      console.log(`Received instance:`, instance);
+    });
 
     return () => {
       socket.disconnect();

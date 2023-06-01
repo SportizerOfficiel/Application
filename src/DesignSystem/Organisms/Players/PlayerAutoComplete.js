@@ -6,15 +6,15 @@ import axios from "axios";
 import debounce from "lodash.debounce";
 // import styled from "styled-components";
 import {getrandomInt} from "@/Utils/Helpers";
-export default function PlayerAutocomplete({ name = "pute", player = {},label="" }) {
+export default function PlayerAutocomplete({ name = "", player = {},label="",index }) {
   const [data, setData] = useState([]);
   const [DefaultKey, setDefaultKey] = useState("%NEW%="+getrandomInt(99999999999));
   const [Numero, setNumero] = useState(player.Numero || 0);
   const [Name, setName] = useState(player.Name || "");
   const [Id, setId] = useState(player._id || DefaultKey);
-  const [IsToCompleted, setIsToCompleted] = useState(false);
+  const [IsToCompleted, setIsToCompleted] = useState(label === "Titulaire" && index === 0);
  
-  
+
 
   const searchPlayers = useCallback(
     debounce(async (search) => {
@@ -44,7 +44,7 @@ export default function PlayerAutocomplete({ name = "pute", player = {},label=""
   }, [player]);
 
   React.useEffect(() => {
-    setIsToCompleted(Numero || Name);
+    setIsToCompleted(Numero || Name || label === "Titulaire" && index === 0);
   }, [Numero, Name]);
 
   return (
@@ -68,11 +68,11 @@ export default function PlayerAutocomplete({ name = "pute", player = {},label=""
         },
       })}
     >
-      <Input type="hidden" value={Id} name={label+" id_"+Id}></Input>
+      <Input type="hidden" value={Id || ""} name={label+" id_"+Id}></Input>
       <Autocomplete
         placeholder="Nom Prénom"
         data={data}
-        value={Name}
+        value={Name || ""}
         required={IsToCompleted}
         name={Id + "_name"}
         onChange={(search) => {

@@ -1,6 +1,119 @@
+/** @format */
+
 export const getrandomInt = (max) => {
   return Math.floor(Math.random() * Math.floor(max));
 };
 export const GenerateKey = () => {
-    return `${getrandomInt(999999999)}${getrandomInt(999999999)}${getrandomInt(999999999)}`;
-  };
+  return `${getrandomInt(999999999)}${getrandomInt(999999999)}${getrandomInt(999999999)}`;
+};
+export const findIndexByValue = (array, value) => {
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === value) {
+      return i;
+    }
+  }
+  return -1; // La valeur n'a pas été trouvée dans le tableau
+};
+
+export const CountPoints = (SportContext) => {
+  let teams = [SportContext.Instance.TEAM1, SportContext.Instance.TEAM2]; // Remplacez TEAM1 et TEAM2 par vos objets d'équipe réels.
+
+  let teamPoints = {};
+
+  for (let team of teams) {
+    let totalPoints = 0;
+    let allPlayers = [...team.titulaires, ...team.remplacants]; // Concaténer les listes des titulaires et des remplacants
+
+    for (let player of allPlayers) {
+      if (player.action && player.action.points) {
+        for (let pointAction of player.action.points) {
+          totalPoints += pointAction.value.value;
+        }
+      }
+    }
+
+    // Stocker les points totaux de l'équipe dans l'objet teamPoints
+    teamPoints[team.club.name] = totalPoints;
+  }
+
+  return teamPoints
+};
+
+
+export const CountFaults = (SportContext) => {
+  let teams = [SportContext.Instance.TEAM1, SportContext.Instance.TEAM2]; // Remplacez TEAM1 et TEAM2 par vos objets d'équipe réels.
+
+  let teamPoints = {};
+
+  for (let team of teams) {
+    let totalPoints = 0;
+    let allPlayers = [...team.titulaires, ...team.remplacants]; // Concaténer les listes des titulaires et des remplacants
+
+    for (let player of allPlayers) {
+      if (player.action && player.action.faults) {
+        for (let pointAction of player.action.faults) {
+          totalPoints += pointAction.value.value;
+        }
+      }
+    }
+
+    // Stocker les points totaux de l'équipe dans l'objet teamPoints
+    teamPoints[team.club.name] = totalPoints;
+  }
+
+  return teamPoints
+};
+const audioBuffers = {};
+
+// Fonction pour précharger le son
+export const preloadSound = (url) => {
+  const audioContext = new AudioContext();
+
+  // Fetch the mp3 file
+  fetch(url)
+    .then(response => response.arrayBuffer())
+    .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+    .then(buffer => {
+      audioBuffers[url] = buffer;
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+// Fonction pour jouer le son
+export const playSound = (url, volume = 1.0) => {
+  return new Promise((resolve, reject) => {
+    const audioBuffer = audioBuffers[url];
+    if (!audioBuffer) {
+      reject(new Error(`Sound not preloaded for url: ${url}`));
+      return;
+    }
+
+    const audioContext = new AudioContext();
+    const gainNode = audioContext.createGain();
+
+    // Définissez le volume du noeud Gain
+    gainNode.gain.value = volume;
+
+    // Connectez le noeud Gain à la destination (les haut-parleurs)
+    gainNode.connect(audioContext.destination);
+
+    // Créez un nouveau nœud source de buffer
+    const source = audioContext.createBufferSource();
+    source.buffer = audioBuffer;
+
+    // Connectez la source au noeud Gain
+    source.connect(gainNode);
+
+    // Quand le son a fini de jouer, résolvez la promesse
+    source.onended = () => {
+      resolve();
+    };
+
+    // Commencez à jouer le son
+    source.start();
+  });
+};
+
+

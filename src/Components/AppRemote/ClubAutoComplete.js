@@ -23,10 +23,11 @@ const AutoCompleteItem = forwardRef(({ value, Logo, ...others }, ref) => (
   </div>
 ));
 
-function ClubAutoComplete({setSubPlayers,setPlayers}) {
+function ClubAutoComplete({setSubPlayers,setPlayers,clublabel}) {
   const [data, setData] = React.useState([]);
   const [DefaultKey, setDefaultKey] = useState("%NEW%="+getrandomInt(99999999999));
   const [Id, setId] = useState(DefaultKey);
+  const [Logo, setLogo] = useState("");
 
   const searchClub = React.useCallback(
     debounce(async (search) => {
@@ -45,6 +46,7 @@ function ClubAutoComplete({setSubPlayers,setPlayers}) {
     if (club) {
       const response = await axios.get("/api/Clubs", { params: { getLastMatchPlayersByClubAndCateg: "U12",id:club.id } });
         setId(club.id)
+        setLogo(club.Logo)
         setSubPlayers(response.data.substitutePlayers)
         setPlayers(response.data.regularPlayers)
     }
@@ -52,8 +54,9 @@ function ClubAutoComplete({setSubPlayers,setPlayers}) {
   return (
     <>
       <Text weight={700} size="lg" mb="md">
-        Nom d'équipe
+        {clublabel}
       </Text>
+      <Input type="hidden" name={"Club"+" Logo_" + Id} value={Logo}></Input>
       <Input type="hidden" name={"Club"+" id_" + Id} value={Id}></Input>
       <Autocomplete
       required
