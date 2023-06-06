@@ -7,7 +7,6 @@ import useForm from "@/Utils/Hooks/useForm";
 import RemotePin from "@/DesignSystem/Organisms/RemotePin/RemotePin";
 import NavbarSimple from "@/DesignSystem/Organisms/NavBar/NavBar";
 import Match from "@/Components/Views/MatchGenerator";
-import PlayerAutocomplete from "@/DesignSystem/Organisms/Players/PlayerAutocomplete";
 
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { Box, Container } from "@mantine/core";

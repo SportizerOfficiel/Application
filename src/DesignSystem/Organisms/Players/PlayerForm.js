@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { Button, Container, Flex, Paper, Text } from "@mantine/core";
-import PlayerAutocomplete from "./PlayerAutocomplete.js";
+import PlayerAutocomplete from "./PlayerAutoComplete";
 import { IconTrash } from "@tabler/icons-react";
 
 export default function PlayerForm({ label = "", numberPlayer = 0, DATAPlayers = [] }) {
