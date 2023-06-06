@@ -23,6 +23,7 @@ export const SportProvider = ({ children }) => {
   };
 
   React.useEffect(() => {
+    if(!Sport || !Config) return
     setInstance(Config);
     WebSocketContext.sendPostMessage("instance", { Sport, Config });
   }, [Config]);

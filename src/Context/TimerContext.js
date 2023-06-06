@@ -80,9 +80,6 @@ export const TimerProvider = ({ children }) => {
 
   const isBuzz = useRef(false);
 
-
-
- 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -97,12 +94,11 @@ export const TimerProvider = ({ children }) => {
     WebSocketContext.BroadCastMessage("stop");
   };
   const startTimeout = (team) => {
-    WebSocketContext.BroadCastMessage("timeout",{team});
+    WebSocketContext.BroadCastMessage("timeout", { team });
   };
 
   const addTime = (additionalTime) => {
-    WebSocketContext.BroadCastMessage("addTime",{additionalTime});
-
+    WebSocketContext.BroadCastMessage("addTime", { additionalTime });
   };
 
   const resetTimer = () => {
@@ -144,7 +140,6 @@ export const TimerProvider = ({ children }) => {
     setIsEnd(false);
   };
 
-  
   const playSound = useAudio("bball_buzzer.wav");
   const playBuzzerSound = async () => {
     // Mettez le timer en pause
@@ -269,7 +264,7 @@ export const TimerProvider = ({ children }) => {
   }, [isRunning]);
 
   React.useEffect(() => {
-    if (!WebSocketContext?.IsScreen) {
+    if (SportContext.Instance && !WebSocketContext?.IsScreen) {
       WebSocketContext.BroadCastMessage("sync", {
         time,
         isRunning,
@@ -340,10 +335,7 @@ export const TimerProvider = ({ children }) => {
       addedTimex.current = addedTimex.current + data.additionalTime;
     });
 
-
-
     const unsubscribeTimeOut = WebSocketContext.onSocket("timeout", (data) => {
-
       playBuzzerSound();
       isTimeOut.current = true;
       if (data.team === "TEAM1") {
