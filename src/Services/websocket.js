@@ -7,7 +7,7 @@ class WebSocketService {
   }
 
   async getKey() {
-    const response = await fetch('http://localhost:8080');
+    const response = await fetch(process.env.SERVERURL);
     if (!response.ok) {
       throw new Error('Error fetching key');
     }
@@ -20,7 +20,7 @@ class WebSocketService {
     this.socket.close();
     return false;
   }
-  this.socket = new WebSocket(`ws://localhost:8080/${key}`);
+  this.socket = new WebSocket(`${process.env.SOCKETURL}/${key}`);
   this.socket.onopen = () => console.log("WebSocket connected");
   this.socket.onerror = (error) => console.error("WebSocket error:", error);
   this.socket.onclose = () => console.log("WebSocket closed");
@@ -50,7 +50,7 @@ class WebSocketService {
   }
   async sendPostMessage(key, type, message) {
     try {
-      const response = await fetch(`http://localhost:8080/api/send-message/${key}`, {
+      const response = await fetch(`${process.env.SERVERURL}/api/send-message/${key}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class WebSocketService {
 
   async BroadCastMessage(key, type, message) {
     try {
-      const response = await fetch(`http://localhost:8080/api/broadcast/${key}`, {
+      const response = await fetch(`${process.env.SERVERURL}/api/broadcast/${key}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

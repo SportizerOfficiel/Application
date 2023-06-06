@@ -76,7 +76,7 @@ const MatchConfigGenerator = ({  prevStep }) => {
   };
 
   const renderDetails = () => {
-    const { t } = useTranslation("common");
+  
     if (SportContext.Sport && SportContext.getSportConfig().Details) {
       const { Details, ...rest } = SportContext.getSportConfig();
       return (

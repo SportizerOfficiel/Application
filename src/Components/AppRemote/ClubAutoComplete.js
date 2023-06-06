@@ -22,8 +22,9 @@ const AutoCompleteItem = forwardRef(({ value, Logo, ...others }, ref) => (
     </Group>
   </div>
 ));
+AutoCompleteItem.displayName = 'AutoCompleteItem';
 
-function ClubAutoComplete({setSubPlayers,setPlayers,clublabel}) {
+const ClubAutoComplete = ({setSubPlayers,setPlayers,clublabel})=> {
   const [data, setData] = React.useState([]);
   const [DefaultKey, setDefaultKey] = useState("%NEW%="+getrandomInt(99999999999));
   const [Id, setId] = useState(DefaultKey);
@@ -77,5 +78,5 @@ function ClubAutoComplete({setSubPlayers,setPlayers,clublabel}) {
     </>
   );
 }
-
+ClubAutoComplete.displayName = 'ClubAutoComplete';
 export default ClubAutoComplete;

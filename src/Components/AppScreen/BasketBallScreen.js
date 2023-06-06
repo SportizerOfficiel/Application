@@ -62,7 +62,7 @@ const BasketBallScreen = () => {
           p={20}
         >
           {SportContext.Instance.TEAM1.titulaires.map((player) => {
-            return <PlayerRow player={player} />;
+            return <PlayerRow player={player} key={player.name+player.number}/>;
           })}
         </Flex>
       </Paper>
@@ -142,7 +142,7 @@ const BasketBallScreen = () => {
           p={20}
         >
           {SportContext.Instance.TEAM2.titulaires.map((player) => {
-            return <PlayerRow player={player} right={true} />;
+            return <PlayerRow player={player} right={true}  key={player.name+player.number}/>;
           })}
         </Flex>
       </Paper>

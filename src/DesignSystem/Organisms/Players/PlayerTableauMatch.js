@@ -98,14 +98,14 @@ const Rows = ({ item, setSearch, team }) => {
               <Flex gap="md" justify="center" align="center">
                 {Object.entries(SportContext.getSportConfig().PlayerSettings.Fautes).map(([e, value]) => {
                   return (
-                    <ButtonAction text={e} onClick={() => GetAction({ item, value, name: e, team, type: "faults" })}>
+                    <ButtonAction key={item.playerId+e+value} text={e} onClick={() => GetAction({ item, value, name: e, team, type: "faults" })}>
                       {<value.icon />}
                     </ButtonAction>
                   );
                 })}
                 {Object.entries(SportContext.getSportConfig().PlayerSettings.Goals).map(([e, value]) => {
                   return (
-                    <ButtonAction text={e} onClick={() => GetAction({ item, value, name: e, team, type: "points" })}>
+                    <ButtonAction key={item.playerId+e+value} text={e} onClick={() => GetAction({ item, value, name: e, team, type: "points" })}>
                       {<value.icon />}
                     </ButtonAction>
                   );
@@ -174,7 +174,7 @@ const Rows = ({ item, setSearch, team }) => {
               Object.entries(countOccurrences(item.action.faults)).map(([type, count]) => {
                 const IconComponent = SportContext.getSportConfig().PlayerSettings.Fautes[type].icon;
                 return (
-                  <Flex gap="xs" align="center">
+                  <Flex gap="xs" align="center" key={item.playerId+type+count+"faults"}>
                     <IconComponent />
                     <Text>{`x${count}`}</Text>
                   </Flex>
@@ -185,7 +185,7 @@ const Rows = ({ item, setSearch, team }) => {
               Object.entries(countOccurrences(item.action.points)).map(([type, count]) => {
                 const IconComponent = SportContext.getSportConfig().PlayerSettings.Goals[type].icon;
                 return (
-                  <Flex gap="xs" align="center">
+                  <Flex gap="xs" align="center" key={item.playerId+type+count+"points"}>
                     <IconComponent />
                     <Text>{`x${count}`}</Text>
                   </Flex>
@@ -288,7 +288,7 @@ export default function PlayerTableauMatch({ team }) {
         </thead>
         <tbody>
           {filteredData.map((item) => (
-            <Rows key={item.playerId} item={item} setSearch={setSearch} team={team}></Rows>
+            <Rows key={item.playerId} item={item} setSearch={setSearch} team={team} ></Rows>
           ))}
         </tbody>
       </Table>
