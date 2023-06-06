@@ -24,7 +24,7 @@ const Match = () => {
           ]}
         >
           {Object.keys(SportConfig).map((sport) => (
-            <ImageCard key={sport} action={() => SportContext.setSport(sport)} title={sport} image={SportConfig[sport].Img} />
+            <ImageCard key={sport} display={SportConfig[sport].Display} action={() => SportContext.setSport(sport)} title={sport} image={SportConfig[sport].Img} />
           ))}
         </SimpleGrid>
       )}

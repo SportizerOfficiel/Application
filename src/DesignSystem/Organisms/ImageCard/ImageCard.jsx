@@ -7,7 +7,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     height: rem(280),
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-    cursor:"pointer",
+ 
     [`&:hover .${getStylesRef('image')}`]: {
       transform: 'scale(1.03)',
     },
@@ -56,9 +56,9 @@ const useStyles = createStyles((theme) => ({
 
 
 
-function ImageCard({ image, title, link,action=()=>{} }) {
+function ImageCard({ image, title,display, link,action=()=>{} }) {
   const { classes, theme } = useStyles();
-
+  console.log(display)
   return (
     <Card
       padding="xs"
@@ -67,10 +67,15 @@ function ImageCard({ image, title, link,action=()=>{} }) {
       radius="md"
       component="a"
 
-      onClick={(e)=>{e.preventDefault();   action()}}
+      onClick={(e)=>{e.preventDefault(); if(display)action()}}
       target="_blank"
+      sx={(theme)=>({
+        cursor: display ? "pointer" : ""
+      })}
     >
-      <div className={classes.image} style={{ backgroundImage: `url(${image})`,objectFit:"cover",backgroundPosition:"center" }} />
+      <div className={classes.image} style={{ backgroundImage: `url(${image})`,objectFit:"cover",backgroundPosition:"center" ,
+        filter: display ? "" :  "grayscale(1)"
+    }} />
       <div className={classes.overlay} />
 
       <div className={classes.content}>

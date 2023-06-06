@@ -74,29 +74,15 @@ export const TimerProvider = ({ children }) => {
   const pauseDuration = useRef(InterPeriodBreakDuration.current);
 
   const isTimeOut = useRef(false);
-  const timeOutTimex = useRef(0);
+  const timeOutTimex = useRef(-1);
   const timeOutTEAM1Count = useRef(0);
   const timeOutTEAM2Count = useRef(0);
 
   const isBuzz = useRef(false);
 
-  const startTimeout = (team) => {
-    playBuzzerSound();
-    isTimeOut.current = true;
-    if (team === "TEAM1") {
-      if (timeOutTEAM1Count.current === TimeOutsPerTeam.current) return;
-      timeOutTEAM1Count.current += 1;
-    } else if (team === "TEAM2") {
-      timeOutTEAM2Count.current += 1;
-    }
-  };
 
-  const endTimeout = () => {
-    playBuzzerSound();
-    isTimeOut.current = false;
-    timeOutTimex.current = 0;
-  };
 
+ 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
@@ -104,11 +90,19 @@ export const TimerProvider = ({ children }) => {
   };
 
   const startTimer = () => {
-    setIsRunning(true);
+    WebSocketContext.BroadCastMessage("start");
   };
 
   const pauseTimer = () => {
-    setIsRunning(false);
+    WebSocketContext.BroadCastMessage("stop");
+  };
+  const startTimeout = (team) => {
+    WebSocketContext.BroadCastMessage("timeout",{team});
+  };
+
+  const addTime = (additionalTime) => {
+    WebSocketContext.BroadCastMessage("addTime",{additionalTime});
+
   };
 
   const resetTimer = () => {
@@ -144,15 +138,13 @@ export const TimerProvider = ({ children }) => {
     nextPausex.current = 0;
     pauseDuration.current = InterPeriodBreakDuration.current;
     isTimeOut.current = false;
-    timeOutTimex.current = 0;
+    timeOutTimex.current = -1;
     timeOutTEAM1Count.current = 0;
     timeOutTEAM2Count.current = 0;
     setIsEnd(false);
   };
+
   
-  const addTime = (additionalTime) => {
-    addedTimex.current = addedTimex.current + additionalTime;
-  };
   const playSound = useAudio("bball_buzzer.wav");
   const playBuzzerSound = async () => {
     // Mettez le timer en pause
@@ -165,27 +157,27 @@ export const TimerProvider = ({ children }) => {
     isBuzz.current = false;
   };
   const EndGame = () => {
-    if(!WebSocketContext.IsScreen)
-    modals.openConfirmModal({
-      title: "Confirm Match End",
-      children: (
-        <Text size="sm">
-          This action is so important that you are required to confirm it with a modal. Please click one of these
-          buttons to proceed.
-        </Text>
-      ),
-      labels: { confirm: "Confirm", cancel: "Cancel" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => {
-        setIsEnd(true);
-        WebSocketContext.sendPostMessage("ShowWin","");
-        setTimeout(() => {
-          reset();
-          SportContext.reset();
-          WebSocketContext.reset();
-        }, 5000);
-      },
-    });
+    if (!WebSocketContext.IsScreen)
+      modals.openConfirmModal({
+        title: "Confirm Match End",
+        children: (
+          <Text size="sm">
+            This action is so important that you are required to confirm it with a modal. Please click one of these
+            buttons to proceed.
+          </Text>
+        ),
+        labels: { confirm: "Confirm", cancel: "Cancel" },
+        onCancel: () => console.log("Cancel"),
+        onConfirm: () => {
+          setIsEnd(true);
+          WebSocketContext.BroadCastMessage("ShowWin");
+          setTimeout(() => {
+            reset();
+            SportContext.reset();
+            WebSocketContext.reset();
+          }, 30000);
+        },
+      });
   };
 
   useEffect(() => {
@@ -203,7 +195,6 @@ export const TimerProvider = ({ children }) => {
               if (timex.current === totalTime + addedTimex.current) {
                 setIsRunning(false);
                 EndGame();
-                console.log("ENNNNNDD");
               }
 
               if (timex.current === nextPausex.current + addedTimex.current) {
@@ -252,18 +243,19 @@ export const TimerProvider = ({ children }) => {
               pauseTimex.current = pauseTimex.current + 1;
 
               if (pauseTimex.current === pauseDuration.current) {
-                playBuzzerSound();
                 isPausex.current = false;
+                playBuzzerSound();
                 pauseTimex.current = -1;
                 addedTimex.current = 0;
               }
             }
-          }
-          if (isTimeOut.current) {
+          } else if (isTimeOut.current) {
             timeOutTimex.current = timeOutTimex.current + 1;
 
             if (timeOutTimex.current === TimeOutsDuration.current) {
-              endTimeout();
+              isTimeOut.current = false;
+              playBuzzerSound();
+              timeOutTimex.current = -1;
             }
           }
         }
@@ -273,13 +265,12 @@ export const TimerProvider = ({ children }) => {
       if (timex.current > 0) playBuzzerSound();
       clearInterval(interval);
     }
-    console.log("TIMER");
     return () => clearInterval(interval);
   }, [isRunning]);
 
   React.useEffect(() => {
     if (!WebSocketContext?.IsScreen) {
-      WebSocketContext.sendPostMessage("timer", {
+      WebSocketContext.BroadCastMessage("sync", {
         time,
         isRunning,
         timex: timex.current,
@@ -289,6 +280,7 @@ export const TimerProvider = ({ children }) => {
         nextPausex: nextPausex.current,
         timeOutTEAM1Count: timeOutTEAM1Count.current,
         timeOutTEAM2Count: timeOutTEAM2Count.current,
+        timeOutTimex: timeOutTimex.current,
         isTimeOut: isTimeOut.current,
         pauseDuration: pauseDuration.current,
         periodCount: periodCount.current,
@@ -305,63 +297,9 @@ export const TimerProvider = ({ children }) => {
         TimeOutsPerTeam: TimeOutsPerTeam.current,
         TimeOutsDuration: TimeOutsDuration.current,
       });
-      console.log("SENDTIMER");
+      console.log("Sync");
     }
-  }, [
-    // SportContext.Instance,
-    // overtimeCount,
-    // periodCount,
-    pauseDuration,
-    isTimeOut,
-    isRunning,
-    isPausex,
-    addedTimex,
-    timeOutTEAM1Count,
-    timeOutTEAM2Count,
-    // PeriodDuration,
-    // InterPeriodBreakDuration,
-    // PeriodsBeforeBreak,
-    // BreakDuration,
-    // PeriodsBeforeOvertime,
-    // MaxOvertimePeriods,
-    // OvertimeDuration,
-    // OvertimeBreakDuration,
-    // TimeOutsPerTeam,
-    // TimeOutsDuration,
-  ]);
-
-  // recupere toutes les infos du payload pour les updates sur le screen
-  React.useEffect(() => {
-    if (!SportContext.Instance || !WebSocketContext.timerpayload) return;
-    if (WebSocketContext.timerpayload.timex >= 0) {
-      setIsRunning(WebSocketContext.timerpayload.isRunning);
-      console.log(WebSocketContext.timerpayload.timex, timex.current);
-      timex.current = WebSocketContext.timerpayload.timex;
-      isPausex.current = WebSocketContext.timerpayload.isPausex;
-      pauseTimex.current = WebSocketContext.timerpayload.pauseTimex;
-      nextPausex.current = WebSocketContext.timerpayload.nextPausex;
-      addedTimex.current = WebSocketContext.timerpayload.addedTimex;
-      timeOutTEAM1Count.current = WebSocketContext.timerpayload.timeOutTEAM1Count;
-      timeOutTEAM2Count.current = WebSocketContext.timerpayload.timeOutTEAM2Count;
-      isTimeOut.current = WebSocketContext.timerpayload.isTimeOut;
-      pauseDuration.current = WebSocketContext.timerpayload.pauseDuration;
-      periodCount.current = WebSocketContext.timerpayload.periodCount;
-      overtimeCount.current = WebSocketContext.timerpayload.overtimeCount;
-
-      PeriodDuration.current = WebSocketContext.timerpayload.PeriodDuration;
-      InterPeriodBreakDuration.current = WebSocketContext.timerpayload.InterPeriodBreakDuration;
-      PeriodsBeforeBreak.current = WebSocketContext.timerpayload.PeriodsBeforeBreak;
-      BreakDuration.current = WebSocketContext.timerpayload.BreakDuration;
-      PeriodsBeforeOvertime.current = WebSocketContext.timerpayload.PeriodsBeforeOvertime;
-      MaxOvertimePeriods.current = WebSocketContext.timerpayload.MaxOvertimePeriods;
-      OvertimeDuration.current = WebSocketContext.timerpayload.OvertimeDuration;
-      OvertimeBreakDuration.current = WebSocketContext.timerpayload.OvertimeBreakDuration;
-      TimeOutsPerTeam.current = WebSocketContext.timerpayload.TimeOutsPerTeam;
-      TimeOutsDuration.current = WebSocketContext.timerpayload.TimeOutsDuration;
-
-      console.log("PAYLOAD");
-    }
-  }, [WebSocketContext.timerpayload]);
+  }, [SportContext.Instance]);
 
   // init la config si le context change
   React.useEffect(() => {
@@ -381,6 +319,77 @@ export const TimerProvider = ({ children }) => {
     console.log("CONFIG LASTCONFIG");
   }, [SportContext.Config]);
 
+  const GetTimeoutCount = (team) => {
+    if (team === "TEAM1") {
+      return timeOutTEAM1Count.current;
+    } else if (team === "TEAM2") {
+      return timeOutTEAM2Count.current;
+    }
+  };
+
+  useEffect(() => {
+    const unsubscribeStart = WebSocketContext.onSocket("start", () => {
+      setIsRunning(true);
+    });
+
+    const unsubscribeStop = WebSocketContext.onSocket("stop", () => {
+      setIsRunning(false);
+    });
+
+    const unsubscribeAddTime = WebSocketContext.onSocket("addTime", (data) => {
+      addedTimex.current = addedTimex.current + data.additionalTime;
+    });
+
+
+
+    const unsubscribeTimeOut = WebSocketContext.onSocket("timeout", (data) => {
+
+      playBuzzerSound();
+      isTimeOut.current = true;
+      if (data.team === "TEAM1") {
+        if (timeOutTEAM1Count.current === TimeOutsPerTeam.current) return;
+        timeOutTEAM1Count.current += 1;
+      } else if (data.team === "TEAM2") {
+        timeOutTEAM2Count.current += 1;
+      }
+    });
+
+    const unsubscribeSync = WebSocketContext.onSocket("sync", (data) => {
+      timex.current = data.timex;
+      timeOutTimex.current = data.timeOutTimex;
+      timeOutTEAM1Count.current = data.timeOutTEAM1Count;
+      timeOutTEAM2Count.current = data.timeOutTEAM2Count;
+      isTimeOut.current = data.isTimeOut;
+      isPausex.current = data.isPausex;
+      pauseTimex.current = data.pauseTimex;
+      nextPausex.current = data.nextPausex;
+      addedTimex.current = data.addedTimex;
+
+      pauseDuration.current = data.pauseDuration;
+      periodCount.current = data.periodCount;
+      overtimeCount.current = data.overtimeCount;
+
+      PeriodDuration.current = data.PeriodDuration;
+      InterPeriodBreakDuration.current = data.InterPeriodBreakDuration;
+      PeriodsBeforeBreak.current = data.PeriodsBeforeBreak;
+      BreakDuration.current = data.BreakDuration;
+      PeriodsBeforeOvertime.current = data.PeriodsBeforeOvertime;
+      MaxOvertimePeriods.current = data.MaxOvertimePeriods;
+      OvertimeDuration.current = data.OvertimeDuration;
+      OvertimeBreakDuration.current = data.OvertimeBreakDuration;
+      TimeOutsPerTeam.current = data.TimeOutsPerTeam;
+      TimeOutsDuration.current = data.TimeOutsDuration;
+    });
+
+    // Call the unsubscribe functions when the component is unmounted
+    return () => {
+      unsubscribeStart();
+      unsubscribeStop();
+      unsubscribeSync();
+      unsubscribeTimeOut();
+      unsubscribeAddTime();
+    };
+  }, []);
   return (
     <TimerContext.Provider
       value={{
@@ -400,6 +409,7 @@ export const TimerProvider = ({ children }) => {
         periodCount,
         timeOutTEAM1Count,
         timeOutTEAM2Count,
+        GetTimeoutCount,
         isTimeOut,
         timeOutTimex,
         isEnd,

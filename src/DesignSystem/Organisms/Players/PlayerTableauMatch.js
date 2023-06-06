@@ -24,6 +24,7 @@ import PlayerTableauRemplace from "./PlayerTableauRemplace";
 import { IconSearch } from "@tabler/icons-react";
 import { findIndexByValue } from "@/Utils/Helpers";
 import { useWebSocket } from "@/Context/WebSocketContext";
+import { useTimer } from "@/Context/TimerContext";
 const jobColors = {
   engineer: "blue",
   manager: "cyan",
@@ -32,7 +33,7 @@ const jobColors = {
 
 const Rows = ({ item, setSearch, team }) => {
   const SportContext = useSport();
-  const WebSocketContext = useWebSocket()
+  const WebSocketContext = useWebSocket();
   const cumulate = SportContext.getSportConfig()?.PlayerSettings?.cumulate;
   const GetAction = ({ item, value, name, team, type }) => {
     const index = findIndexByValue(SportContext.Instance[team].titulaires, item);
@@ -41,14 +42,15 @@ const Rows = ({ item, setSearch, team }) => {
     // to deep copy the buffer object you can use:
     // const buffer = JSON.parse(JSON.stringify(SportContext.Instance));
     let totalFaults = 0;
-    if (type === 'faults') {
-      totalFaults = buffer[team].titulaires[index].action?.["faults"]?.reduce((acc, cur) => acc + cur.value.value, 0) || 0;
+    if (type === "faults") {
+      totalFaults =
+        buffer[team].titulaires[index].action?.["faults"]?.reduce((acc, cur) => acc + cur.value.value, 0) || 0;
     }
     const maxFaults = SportContext.getSportConfig().PlayerSettings.maxFaults;
-  
+
     if (totalFaults >= maxFaults) {
       // If the player has reached maxFaults, stop adding more faults
-      console.log('Player has reached maximum faults');
+      console.log("Player has reached maximum faults");
       return;
     }
 
@@ -59,9 +61,9 @@ const Rows = ({ item, setSearch, team }) => {
         [type]: [...(buffer[team].titulaires[index].action?.[type] || []), { type: name, value: value }],
       },
     };
-    
+
     SportContext.setInstance(buffer);
-    WebSocketContext.sendPostMessage("instance",buffer);
+    WebSocketContext.sendPostMessage("instance", buffer);
     modals.closeAll();
   };
 
@@ -77,7 +79,7 @@ const Rows = ({ item, setSearch, team }) => {
         setSearch("");
         modals.open({
           p: 30,
-        size:"lg",
+          size: "lg",
           title: (
             <Text
               size="xl"
@@ -114,12 +116,11 @@ const Rows = ({ item, setSearch, team }) => {
                   fullWidth
                   mt="xl"
                   mb="sm"
-                 
                   onClick={() => {
                     modals.closeAll();
                     modals.open({
                       p: 30,
-                      size:"lg",
+                      size: "lg",
                       title: (
                         <Text
                           size="xl"
@@ -135,7 +136,11 @@ const Rows = ({ item, setSearch, team }) => {
                       ),
                       children: (
                         <>
-                          <PlayerTableauRemplace data={SportContext.Instance[team]} item={item} team={team}></PlayerTableauRemplace>
+                          <PlayerTableauRemplace
+                            data={SportContext.Instance[team]}
+                            item={item}
+                            team={team}
+                          ></PlayerTableauRemplace>
                         </>
                       ),
                     });
@@ -149,7 +154,7 @@ const Rows = ({ item, setSearch, team }) => {
         });
       }}
     >
-        <td>
+      <td>
         <Anchor component="button" size="sm">
           {item.number}
         </Anchor>
@@ -161,8 +166,8 @@ const Rows = ({ item, setSearch, team }) => {
           </Text>
         </Group>
       </td>
-   
-        <td>
+
+      <td>
         {item?.action && (
           <Flex gap="sm">
             {item.action?.faults?.length > 0 &&
@@ -170,42 +175,46 @@ const Rows = ({ item, setSearch, team }) => {
                 const IconComponent = SportContext.getSportConfig().PlayerSettings.Fautes[type].icon;
                 return (
                   <Flex gap="xs" align="center">
-                    <IconComponent /><Text>{`x${count}`}</Text>
+                    <IconComponent />
+                    <Text>{`x${count}`}</Text>
                   </Flex>
                 );
               })}
-            {item.action?.points?.length > 0 && !cumulate &&
+            {item.action?.points?.length > 0 &&
+              !cumulate &&
               Object.entries(countOccurrences(item.action.points)).map(([type, count]) => {
                 const IconComponent = SportContext.getSportConfig().PlayerSettings.Goals[type].icon;
                 return (
                   <Flex gap="xs" align="center">
-                    <IconComponent /><Text>{`x${count}`}</Text>
+                    <IconComponent />
+                    <Text>{`x${count}`}</Text>
                   </Flex>
                 );
               })}
-           {item.action?.points?.length > 0 && cumulate && 
-           <Flex gap="xs" align="center">
-                  <Text>{`+${CumulatePoints(item)}`}</Text>
-            </Flex>}
-          </Flex>)}
-        </td>
-      
-      </Box>
+            {item.action?.points?.length > 0 && cumulate && (
+              <Flex gap="xs" align="center">
+                <Text>{`+${CumulatePoints(item)}`}</Text>
+              </Flex>
+            )}
+          </Flex>
+        )}
+      </td>
+    </Box>
   );
 };
 
-const CumulatePoints= (item)=>{
-  let Points = 0
+const CumulatePoints = (item) => {
+  let Points = 0;
   item.action.points.forEach((e) => {
     Points += e.value.value;
-  })
-  return Points
-}
+  });
+  return Points;
+};
 
 export default function PlayerTableauMatch({ team }) {
   const SportContext = useSport();
   const [search, setSearch] = React.useState("");
-
+  const TimerContext = useTimer();
   const filteredData = SportContext.Instance[team].titulaires.filter(
     (player) => player.name.toLowerCase().includes(search.toLowerCase()) || player.number.toString() === search
   );
@@ -215,41 +224,75 @@ export default function PlayerTableauMatch({ team }) {
   };
 
   return (
-      <ScrollArea  sx={(theme) => ({
-        width: "100%"
-      })}>
-        <Box
+    <ScrollArea
+      sx={(theme) => ({
+        width: "100%",
+      })}
+    >
+      <Box
+        sx={(theme) => ({
+          width: "100%",
+          height: "100px",
+          background: `url("${SportContext.Instance[team].club.clubLogo}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        })}
+      ></Box>
+      {TimerContext.isRunning && !TimerContext.isPausex.current  && !TimerContext.isTimeOut.current && SportContext.getSportConfig().Details.TimeOutsPerTeam.value > 0   && (
+        <Button
+          size="md"
+          mt="sm"
           sx={(theme) => ({
             width: "100%",
-            height: "100px",
-            background: `url("${SportContext.Instance[team].club.clubLogo}")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
+            background: theme.colors.red[8],
+            "&:hover": {
+              background: theme.colors.red[7],
+            },
           })}
-        ></Box>
-        <TextInput
-          placeholder="Search by any field"
-          my="md"
-          icon={<IconSearch size="0.9rem" stroke={1.5} />}
-          value={search}
-          onChange={handleSearch}
-        />
-        <Table verticalSpacing="md" highlightOnHover striped fontSize="md">
-          <thead>
-            <tr>
+          onClick={() => {
+            if(TimerContext.GetTimeoutCount(team)<SportContext.getSportConfig().Details.TimeOutsPerTeam.value)
+            modals.openConfirmModal({
+              title: "Confirm Temps Mort",
+              children: (
+                <Text size="sm">
+                  This action is so important that you are required to confirm it with a modal. Please click one of
+                  these buttons to proceed.
+                </Text>
+              ),
+              labels: { confirm: "Confirm", cancel: "Cancel" },
+              onCancel: () => console.log("Cancel"),
+              onConfirm: () => {
+                TimerContext.startTimeout(team);
+              },
+            });
+          }}
+        >
+          Temps Mort {TimerContext.GetTimeoutCount(team)}/{SportContext.getSportConfig().Details.TimeOutsPerTeam.value}
+        </Button>
+      )}
+      <TextInput
+        placeholder="Search by any field"
+        my="md"
+        icon={<IconSearch size="0.9rem" stroke={1.5} />}
+        value={search}
+        onChange={handleSearch}
+      />
+      <Table verticalSpacing="md" highlightOnHover striped fontSize="md">
+        <thead>
+          <tr>
             <th>Number</th>
-              <th>Name</th>
-              <th></th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.map((item) => (
-              <Rows key={item.playerId} item={item} setSearch={setSearch} team={team}></Rows>
-            ))}
-          </tbody>
-        </Table>
-      </ScrollArea>
+            <th>Name</th>
+            <th></th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          {filteredData.map((item) => (
+            <Rows key={item.playerId} item={item} setSearch={setSearch} team={team}></Rows>
+          ))}
+        </tbody>
+      </Table>
+    </ScrollArea>
   );
 }
 

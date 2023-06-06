@@ -7,41 +7,45 @@ import React from "react";
 import PlayerTableauMatch from "@/DesignSystem/Organisms/Players/PlayerTableauMatch";
 import { useTimer } from "@/Context/TimerContext";
 import { modals } from "@mantine/modals";
-import {CountPoints} from "@/Utils/Helpers";
+import { CountPoints } from "@/Utils/Helpers";
+import FireWork from "@/DesignSystem/Organisms/FireWork/FireWork";
+import { useWebSocket } from "@/Context/WebSocketContext";
 const MatchInstance = () => {
   const SportContext = useSport();
- const teamPoints = CountPoints(SportContext)
+  const teamPoints = CountPoints(SportContext);
   const teamNames = Object.keys(teamPoints);
-
+  const { ShowWin } = useWebSocket();
+  
   return (
-    <Box
-      sx={(theme) => ({
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gridTemplateRows: "auto auto auto auto",
-        gridTemplateAreas: ` 
+    <>
+      {!ShowWin && (
+        <Box
+          sx={(theme) => ({
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gridTemplateRows: "auto auto auto auto",
+            gridTemplateAreas: ` 
         "a b"
-        "f e"
         "c d"
         "c d"`,
-        gap: theme.spacing.sm,
-        width: "100%"
-      })}
-      pb="xl"
-    >
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "a",
-          height: "fit-content",
-          width: "100%",
-          position: "relative",
-        })}
-      >
-        {/* <Flex direction="column">
+            gap: theme.spacing.sm,
+            width: "100%",
+          })}
+          pb="xl"
+        >
+          <Paper
+            withBorder
+            shadow="md"
+            p={30}
+            radius="md"
+            sx={(theme) => ({
+              gridArea: "a",
+              height: "fit-content",
+              width: "100%",
+              position: "relative",
+            })}
+          >
+            {/* <Flex direction="column">
         <Text size="xl" weight="600" mt="xs">
           Category: {SportContext.Config.Parameters.Category}
         </Text>
@@ -52,124 +56,103 @@ const MatchInstance = () => {
           Durée: {SportContext.Config.Parameters.GameDuration}
         </Text>
       </Flex> */}
-        <Flex gap="xl" justify="center">
-          <Flex direction="column" justify="center" align="center">
-            <Avatar size="xl" src={SportContext.Instance.TEAM1.club.clubLogo}></Avatar>
-            <Text transform="uppercase" weight="600" mt="xs">
-              {SportContext.Instance.TEAM1.club.name}
-            </Text>
-          </Flex>
-          <Flex justify="center" align="center" mb="xl">
-            <Text
-              weight="600"
-              sx={(theme) => ({
-                textAlign: "center",
-                fontSize: "3rem",
-                width: "100%",
-              })}
-            >
-              {teamPoints[teamNames[0]]}
-            </Text>
-            <Text
-              weight="600"
-              sx={(theme) => ({
-                textAlign: "center",
-                fontSize: "3rem",
-                width: "100%",
-              })}
-            >
-              -
-            </Text>
-            <Text
-              weight="600"
-              sx={(theme) => ({
-                textAlign: "center",
-                fontSize: "3rem",
-                width: "100%",
-              })}
-            >
-              {teamPoints[teamNames[1]]}
-            </Text>
-          </Flex>
-          <Flex direction="column" justify="center" align="center">
-            <Avatar size="xl" src={SportContext.Instance.TEAM2.club.clubLogo}></Avatar>
-            <Text transform="uppercase" weight="600" mt="xs">
-              {SportContext.Instance.TEAM2.club.name}
-            </Text>
-          </Flex>
-        </Flex>
-      </Paper>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "b",
-          position: "relative",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        })}
-      >
-        <Timer></Timer>
-      </Paper>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "e",
-          position: "relative",
-          height: "100%",
-        })}
-      >
-        <TimerControls></TimerControls>
-      </Paper>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "f",
-          position: "relative",
-          height: "100%",
-        })}
-      >
-        <Controls></Controls>
-      </Paper>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "c",
-          position: "relative",
-          height: "100%",
-          width: "100%",
-        })}
-      >
-        <PlayerTableauMatch team={"TEAM1"}></PlayerTableauMatch>
-      </Paper>
-      <Paper
-        withBorder
-        shadow="md"
-        p={30}
-        radius="md"
-        sx={(theme) => ({
-          gridArea: "d",
-          height: "fit-content",
-          width: "100%",
-        })}
-      >
-        <PlayerTableauMatch team={"TEAM2"}></PlayerTableauMatch>
-      </Paper>
-    
-    </Box>
+            <Flex gap="xl" justify="center">
+              <Flex direction="column" justify="center" align="center">
+                <Avatar size="xl" src={SportContext.Instance.TEAM1.club.clubLogo}></Avatar>
+                <Text transform="uppercase" weight="600" mt="xs">
+                  {SportContext.Instance.TEAM1.club.name}
+                </Text>
+              </Flex>
+              <Flex justify="center" align="center" mb="xl">
+                <Text
+                  weight="600"
+                  sx={(theme) => ({
+                    textAlign: "center",
+                    fontSize: "3rem",
+                    width: "100%",
+                  })}
+                >
+                  {teamPoints[teamNames[0]]}
+                </Text>
+                <Text
+                  weight="600"
+                  sx={(theme) => ({
+                    textAlign: "center",
+                    fontSize: "3rem",
+                    width: "100%",
+                  })}
+                >
+                  -
+                </Text>
+                <Text
+                  weight="600"
+                  sx={(theme) => ({
+                    textAlign: "center",
+                    fontSize: "3rem",
+                    width: "100%",
+                  })}
+                >
+                  {teamPoints[teamNames[1]]}
+                </Text>
+              </Flex>
+              <Flex direction="column" justify="center" align="center">
+                <Avatar size="xl" src={SportContext.Instance.TEAM2.club.clubLogo}></Avatar>
+                <Text transform="uppercase" weight="600" mt="xs">
+                  {SportContext.Instance.TEAM2.club.name}
+                </Text>
+              </Flex>
+            </Flex>
+          </Paper>
+          <Paper
+            withBorder
+            shadow="md"
+            p={30}
+            radius="md"
+            sx={(theme) => ({
+              gridArea: "b",
+              position: "relative",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            })}
+          >
+            <Timer></Timer>
+            <TimerControls></TimerControls>
+          </Paper>
+
+          <Paper
+            withBorder
+            shadow="md"
+            p={30}
+            radius="md"
+            sx={(theme) => ({
+              gridArea: "c",
+              position: "relative",
+              height: "100%",
+              width: "100%",
+            })}
+          >
+            <PlayerTableauMatch team={"TEAM1"}></PlayerTableauMatch>
+          </Paper>
+          <Paper
+            withBorder
+            shadow="md"
+            p={30}
+            radius="md"
+            sx={(theme) => ({
+              gridArea: "d",
+              height: "fit-content",
+              width: "100%",
+            })}
+          >
+            <PlayerTableauMatch team={"TEAM2"}></PlayerTableauMatch>
+          </Paper>
+        </Box>
+      )}
+      {ShowWin && <FireWork />}
+    </>
   );
 };
 
@@ -189,6 +172,8 @@ const Timer = () => {
     isPausex,
     addedTimex,
     nextPausex,
+    isTimeOut,
+    timeOutTimex,
   } = useTimer();
 
   // Here you can use your timer context functions and state as you normally would in your component
@@ -196,7 +181,7 @@ const Timer = () => {
 
   return (
     <Flex direction="column" px="xl" gap="xl">
-      {!isPausex.current && (
+      {!isPausex.current && !isTimeOut.current && (
         <Title
           order={1}
           style={{
@@ -212,6 +197,19 @@ const Timer = () => {
           })}
         >
           {formatTime(timex.current)}
+        </Title>
+      )}
+      {isTimeOut.current && (
+        <Title
+          weight="600"
+          sx={(theme) => ({
+            textAlign: "center",
+            fontSize: "4rem",
+            width: "100%",
+            color: "violet",
+          })}
+        >
+          {formatTime(timeOutTimex.current)}
         </Title>
       )}
       {isPausex.current && (
@@ -263,24 +261,32 @@ const TimerControls = () => {
   // Rest of your component logic ...
 
   return (
-    <Box>
-      <Flex px="xl" gap="xl" justify="space-around" align="center">
-        <Button size="md" onClick={resetTimer}>
-          Reset
+    <Flex
+      px="xl"
+      gap="xl"
+      justify="space-around"
+      align="center"
+      sx={(theme) => ({
+        width: "100%",
+      })}
+    >
+      {!isRunning && (
+        <Button
+          size="md"
+          onClick={startTimer}
+          sx={(theme) => ({
+            width: "100%",
+          })}
+        >
+          Start
         </Button>
-        {!isRunning && (
-          <Button size="md" onClick={startTimer}>
-            Start
-          </Button>
-        )}
-        {isRunning && (
-          <Button color="red" size="md" onClick={pauseTimer}>
-            Pause
-          </Button>
-        )}
-
-      </Flex>
-    </Box>
+      )}
+      {isRunning && (
+        <Button color="red" size="md" onClick={pauseTimer}>
+          Pause
+        </Button>
+      )}
+    </Flex>
   );
 };
 
@@ -305,9 +311,7 @@ const Controls = () => {
 
   return (
     <Box>
-        <Flex px="xl" gap="xl" justify="space-around" align="center">
-  
-      </Flex>
+      <Flex px="xl" gap="xl" justify="space-around" align="center"></Flex>
     </Box>
   );
 };

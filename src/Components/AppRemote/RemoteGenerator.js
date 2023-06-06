@@ -155,10 +155,7 @@ const FiltreTeam = (data) => {
     }
   }
 
-  console.log("Titulaires :", titulaires);
-  console.log("Remplaçants :", remplacants);
-  console.log("Club :", club);
-  console.log("Nouveaux joueurs :", newPlayers);
+
 
   return { titulaires, remplacants, club, newPlayers };
 };

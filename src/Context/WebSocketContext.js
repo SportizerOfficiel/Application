@@ -22,6 +22,7 @@ export const WebSocketProvider = ({ children }) => {
   const [loading, setloading] = useState(false);
   const [IsScreen, setIsScreen] = useState(false);
   const [ShowWin, setShowWin] = useState(false);
+  const [subscribers, setSubscribers] = useState({});
 
   const fetchKey = async () => {
     setloading(true);
@@ -58,6 +59,9 @@ export const WebSocketProvider = ({ children }) => {
   const sendPostMessage = (type, message) => {
     WebSocketService.sendPostMessage(key, type, message);
   };
+  const BroadCastMessage = (type, message) => {
+    WebSocketService.BroadCastMessage(key, type, message);
+  };
 
   useEffect(() => {
     WebSocketService.setMessageHandler((data) => {
@@ -68,6 +72,30 @@ export const WebSocketProvider = ({ children }) => {
       WebSocketService.setMessageHandler(null);
     };
   }, [key]);
+
+  const onSocket = (eventName, callback) => {
+    setSubscribers(prevSubscribers => {
+      const newSubscribers = {
+        ...prevSubscribers,
+        [eventName]: [...(prevSubscribers[eventName] || []), callback],
+      };
+      if (newSubscribers[eventName].length > 1) {
+        console.warn(`Warning: More than one listener subscribed to the '${eventName}' event`);
+      }
+      return newSubscribers;
+    });
+  
+    // Return a function that will remove the listener when called
+    return () => {
+      setSubscribers(prevSubscribers => {
+        return {
+          ...prevSubscribers,
+          [eventName]: (prevSubscribers[eventName] || []).filter(cb => cb !== callback)
+        };
+      });
+    };
+  };
+  
 
   const handlerMessage = (data) => {
     console.log(data.type, "GET WEBSOCKET CALL");
@@ -91,6 +119,9 @@ export const WebSocketProvider = ({ children }) => {
         setShowWin(true);
         break;
       default:
+        if (subscribers[data.type]) {
+          subscribers[data.type].forEach(callback => callback(data.message));
+        }
         break;
     }
   };
@@ -115,6 +146,7 @@ export const WebSocketProvider = ({ children }) => {
     connect,
     disconnect,
     sendPostMessage,
+    BroadCastMessage,
     settimerpayload,
     receivedMessages,
     RemoteConnected,
@@ -128,7 +160,8 @@ export const WebSocketProvider = ({ children }) => {
     reset,
     Init,
     setInit,
-    ShowWin
+    ShowWin,
+    onSocket
   };
 
   return <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>;

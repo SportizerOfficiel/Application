@@ -19,7 +19,6 @@ const Rows = ({ role, data, titu, team }) => {
 
   const Replace = (index) => {
     let buffer = { ...SportContext.Instance };
-    console.log(titu, buffer[team].titulaires);
     const titulaireIndex = findIndexByValue(buffer[team].titulaires, titu);
     const titulaireBuffer = buffer[team].titulaires[titulaireIndex];
     const remplacantsBuffer = buffer[team].remplacants[index];

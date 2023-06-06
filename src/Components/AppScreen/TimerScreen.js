@@ -9,18 +9,14 @@ import { useTimer } from "@/Context/TimerContext";
 
 const TimerScreen = () => {
   const {
-    time,
-    startTimer,
-    pauseTimer,
-    resetTimer,
-    addTime,
     formatTime,
-    isRunning,
     timex,
     pauseTimex,
     isPausex,
     addedTimex,
     nextPausex,
+    isTimeOut,
+    timeOutTimex
   } = useTimer();
   return (
     <Box
@@ -38,7 +34,7 @@ const TimerScreen = () => {
         boxShadow: theme.shadows.xl,
       })}
     >
-      {!isPausex.current && (
+      {!isPausex.current && !isTimeOut.current && (
         <Text
           weight="600"
           style={{
@@ -54,12 +50,25 @@ const TimerScreen = () => {
        {formatTime(timex.current)}
         </Text>
       )}
+       {isTimeOut.current && (
+        <Text
+          weight="600"
+          style={{
+            color:"violet"
+          }}
+          sx={(theme) => ({
+            fontSize: "8vw",
+          })}
+        >
+       {formatTime(timeOutTimex.current)}
+        </Text>
+      )}
       {isPausex.current && (
         <Text
           weight="600"
           sx={(theme) => ({
             fontSize: "8vw",
-            color: theme.colors.blue[9],
+            color: theme.colors.brand[2],
           })}
         >
           {formatTime(pauseTimex.current)}

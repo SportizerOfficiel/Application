@@ -23,7 +23,7 @@ const useAudio = (url) => {
       source.buffer = buffer.current;
       source.connect(gainNode.current);
       gainNode.current.connect(audioContext.current.destination);
-      gainNode.current.gain.value = volume;
+      gainNode.current.gain.value = 0;
       source.start(0);
     }
   };
@@ -31,4 +31,10 @@ const useAudio = (url) => {
   return playSound;
 };
 
+
+
+
 export default useAudio;
+
+
+

@@ -34,7 +34,6 @@ const Timer = () => {
 
         if (timex.current === totalTime + addedTimex.current) {
           setIsRunning(false);
-          console.log("ENNNNNDD");
         }
 
         if (timex.current === nextPausex.current + addedTimex.current) {

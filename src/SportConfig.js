@@ -10,6 +10,7 @@ import TwoPointer from "./DesignSystem/Atoms/TwoPointer";
 
 const SportConfig = {
   Football: {
+    Display:false,
     Img: "https://img.lemde.fr/2022/11/26/0/0/2340/1560/664/0/75/0/c9e9566_8830d2670b8b49fdbcf01579d46a0655-0-f682a76166f84e52b3f6a1bb547458eb.jpg",
     PlayerList: {
       PlayerPerTeam: 11,
@@ -69,6 +70,7 @@ const SportConfig = {
     }
   },
   Basketball: {
+    Display:true,
     Img: "https://media.discordapp.net/attachments/1055399563529302026/1107019541093031996/Regtx5_basketball_dunk_d4dc96c5-3adb-44e2-bfc0-600b94e87144.png?width=1042&height=1042",
     PlayerList: {
       PlayerPerTeam: 5,
@@ -82,7 +84,7 @@ const SportConfig = {
       },
       Goals: {
         TwoPointer: { value: 2, icon: TwoPointer },
-        ThreePointer: { value: 100, icon: ThreePointer },
+        ThreePointer: { value: 3, icon: ThreePointer },
         FreeThrow: { value: 1, icon: FreeThrow },
       },
     },
@@ -112,6 +114,7 @@ const SportConfig = {
     }
   },
   Handball: {
+    Display:false,
     Img: "https://pyrene-hand.fr/wp-content/uploads/sites/287/2019/04/6-2.jpg",
     PlayerList: {
       PlayerPerTeam: 7,
@@ -133,6 +136,7 @@ const SportConfig = {
     },
   },
   Volleyball: {
+    Display:false,
     Img: "https://dicodusport.fr/wp-content/uploads/2016/03/Definition-Volley-ball.png",
     PlayerList: {
       PlayerPerTeam: 6,
@@ -152,6 +156,7 @@ const SportConfig = {
     },
   },
   Badminton: {
+    Display:false,
     Img: "https://dicodusport.fr/wp-content/uploads/2016/01/Definition-badminton.png",
     PlayerList: {
       PlayerPerTeam: 1,
@@ -172,6 +177,7 @@ const SportConfig = {
     },
   },
   Tennis: {
+    Display:false,
     Img: "https://www.lequipe.fr/_medias/img-photo-jpg/caroline-garcia-n-a-pas-reussi-a-peser-sur-le-match-interrompu-par-la-pluie-rob-prange-rob-prange-afp7/1500000001783957/0:0,1841:1227-828-552-75/99ee9",
     PlayerList: {
       PlayerPerTeam: 1,

@@ -69,6 +69,27 @@ class WebSocketService {
     }
   }
 
+  async BroadCastMessage(key, type, message) {
+    try {
+      const response = await fetch(`http://localhost:8080/api/broadcast/${key}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type, message }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(`Failed to send message: `, error);
+    }
+  }
+
   
   
   setMessageHandler(handler) {

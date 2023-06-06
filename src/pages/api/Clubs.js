@@ -9,7 +9,6 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       if (query.getLastMatchPlayersByClubAndCateg &&  query.id) {
-        console.log(query)
         return await ClubsController.getLastMatchPlayersByClubAndCateg({ body:query.getLastMatchPlayersByClubAndCateg,id:query.id, res });
        } else if (query.id) {
         return await ClubsController.getClubsById({ id: query.id, res });
