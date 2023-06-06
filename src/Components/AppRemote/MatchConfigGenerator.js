@@ -107,7 +107,7 @@ const MatchConfigGenerator = ({  prevStep }) => {
         >
           <Flex direction="column" justify="center" align="center"  >
             <Text weight={700} size="lg" mb="md">
-              {t("Parametres")}
+            Parametres
             </Text>
     
             <Flex wrap="wrap" justify="center" align="center" p="xl" gap="xl">
