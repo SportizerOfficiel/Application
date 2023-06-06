@@ -5,7 +5,7 @@ var User = require("../Models/User");
 import HandleRequest from "@/Utils/HandleRequest";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-const SECRET_KEY = process.env.JWT_SECRET_KEY;
+const SECRET_KEY = process.env.NEXT_PUBLIC_JWT_SECRET_KEY;
 const SALT_ROUNDS = 10;
 
 
