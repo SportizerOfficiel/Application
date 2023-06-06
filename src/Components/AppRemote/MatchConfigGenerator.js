@@ -8,7 +8,7 @@ import { useSport } from "@/Context/SportContext";
 
 const SelectComponent = ({ label, options }) => {
   const { locale } = useRouter();
-  const { t } = useTranslation("common");
+
   return (
     <Select
       label={label}
@@ -28,7 +28,7 @@ const SelectComponent = ({ label, options }) => {
 };
 
 const InputComponent = ({label, value}) => {
-  const { t } = useTranslation("common");
+
 
   return (
     <Input.Wrapper id="input-demo" withAsterisk label={label} description={value.description}>
