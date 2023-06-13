@@ -5,46 +5,56 @@ import { Autocomplete, Box, Input } from "@mantine/core";
 import axios from "axios";
 import debounce from "lodash.debounce";
 // import styled from "styled-components";
-import {getrandomInt} from "@/Utils/Helpers";
-export default function PlayerAutocomplete({ name = "", player = {},label="",index }) {
+import { getrandomInt } from "@/Utils/Helpers";
+export default function PlayerAutocomplete({ name = "", player = {}, label = "", index }) {
   const [data, setData] = useState([]);
-  const [DefaultKey, setDefaultKey] = useState("%NEW%="+getrandomInt(99999999999));
+  const [DefaultKey, setDefaultKey] = useState("%NEW%=" + getrandomInt(99999999999));
   const [Numero, setNumero] = useState(player.Numero || 0);
+  const [BaseNumero, setBaseNumero] = useState(player.Numero || 0);
   const [Name, setName] = useState(player.Name || "");
+  const [IdClub, setIdClub] = useState(player.idClub || "");
   const [Id, setId] = useState(player._id || DefaultKey);
   const [IsToCompleted, setIsToCompleted] = useState(label === "Titulaire" && index === 0);
- 
-
 
   const searchPlayers = useCallback(
     debounce(async (search) => {
       setId(DefaultKey);
       // Replace with your API URL
       const response = await axios.get("/api/Players", { params: { search: search } });
-      const players = response.data.map((player) => ({ _id: player._id, value: player.Name, numero: player.Numero }));
+      const players = response.data.map((player) => ({
+        _id: player._id,
+        value: player.Name,
+        Numero: player.Numero,
+        idClub: player.idClub,
+        baseNumber: player.Numero,
+      }));
       setData(players);
-      UpdatePlayers(search,players);
+      UpdatePlayers(search, players);
     }, 500),
     []
   );
 
-  const UpdatePlayers = async (e,players) => {
+  const UpdatePlayers = async (e, players) => {
     const player = players.find((player) => player.value.toLowerCase() === e.toLowerCase());
-    
+
     if (player) {
-      setNumero(player.numero);
+      setNumero(player.Numero);
       setName(player.value);
       setId(player._id);
+      setIdClub(player.idClub);
+      setBaseNumero(player.Numero);
     }
   };
   React.useEffect(() => {
+    setBaseNumero(player.Numero);
     setNumero(player.Numero);
     setName(player.Name);
     setId(player._id);
+    setIdClub(player.idClub);
   }, [player]);
 
   React.useEffect(() => {
-    setIsToCompleted(Numero || Name || label === "Titulaire" && index === 0);
+    setIsToCompleted(Numero || Name || (label === "Titulaire" && index === 0));
   }, [Numero, Name]);
 
   return (
@@ -68,7 +78,10 @@ export default function PlayerAutocomplete({ name = "", player = {},label="",ind
         },
       })}
     >
-      <Input type="hidden" value={Id || ""} name={label+" id_"+Id}></Input>
+      <Input type="hidden" value={IdClub || ""} name={Id + "_idclub"}></Input>
+      <Input type="hidden" value={BaseNumero} name={Id + "_basenumber"}></Input>
+      <Input type="hidden" value={Id || ""} name={label + " id_" + Id}></Input>
+
       <Autocomplete
         placeholder="Nom Prénom"
         data={data}
@@ -81,7 +94,7 @@ export default function PlayerAutocomplete({ name = "", player = {},label="",ind
         }}
       />
       <Input
-      required={IsToCompleted}
+        required={IsToCompleted}
         maxLength={3}
         value={Numero || ""}
         onChange={(e) => setNumero(e.target.value)}

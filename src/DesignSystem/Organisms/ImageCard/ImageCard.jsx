@@ -58,7 +58,6 @@ const useStyles = createStyles((theme) => ({
 
 function ImageCard({ image, title,display, link,action=()=>{} }) {
   const { classes, theme } = useStyles();
-  console.log(display)
   return (
     <Card
       padding="xs"

@@ -166,11 +166,16 @@ export const TimerProvider = ({ children }) => {
         onConfirm: () => {
           setIsEnd(true);
           WebSocketContext.BroadCastMessage("ShowWin");
-          setTimeout(() => {
-            reset();
-            SportContext.reset();
-            WebSocketContext.reset();
-          }, 30000);
+
+          SportContext.SaveMatch(
+            time,
+            ()=>{
+            setTimeout(() => {
+              reset();
+              SportContext.reset();
+              WebSocketContext.reset();
+            }, 30000)}
+          );
         },
       });
   };
@@ -292,7 +297,7 @@ export const TimerProvider = ({ children }) => {
         TimeOutsPerTeam: TimeOutsPerTeam.current,
         TimeOutsDuration: TimeOutsDuration.current,
       });
-      console.log("Sync");
+
     }
   }, [SportContext.Instance]);
 
@@ -311,7 +316,7 @@ export const TimerProvider = ({ children }) => {
     TimeOutsDuration.current = parseInt(SportContext.Config.Parameters.TimeOutsDuration);
 
     nextPausex.current = parseInt(SportContext.Config.Parameters.PeriodDuration);
-    console.log("CONFIG LASTCONFIG");
+ 
   }, [SportContext.Config]);
 
   const GetTimeoutCount = (team) => {

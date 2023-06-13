@@ -39,6 +39,7 @@ const getPlayersById = HandleRequest(async ({ body, id }) => {
  * Modification d'un joueur
  */
 const putPlayersById = HandleRequest(async ({ body, id }) => {
+  console.log(id,body,"BDDD");
   await dbConnect();
   const data = await Players.findByIdAndUpdate(id, body, {
     new: true,

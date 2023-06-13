@@ -8,7 +8,7 @@ import { useSport } from "@/Context/SportContext";
 import useForm from "@/Utils/Hooks/useForm";
 import ClubAutoComplete from "./ClubAutoComplete";
 
-const PlayerList = ({ PlayerList, action = () => {}, clublabel = "", prevStep }) => {
+const PlayerList = ({ PlayerList, action = () => {}, clublabel = "", prevStep,team,recap }) => {
   const [regularPlayers, setRegularPlayers] = React.useState([]);
   const [substitutePlayers, setSubstitutePlayers] = React.useState([]);
 
@@ -40,9 +40,11 @@ const PlayerList = ({ PlayerList, action = () => {}, clublabel = "", prevStep })
         >
       <Flex align="center" direction="column">
         <ClubAutoComplete
+        team={team}
           setPlayers={setRegularPlayers}
           setSubPlayers={setSubstitutePlayers}
           clublabel={clublabel}
+          recap={recap}
         ></ClubAutoComplete>
       </Flex>
       <Space my="xl"></Space>

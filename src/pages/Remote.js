@@ -24,11 +24,14 @@ const Content = styled.div`
 const Remote = (props) => {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const SportContext = useSport();
-  const { user, logout } = useAuth();
+  const { ProtectedRoute } = useAuth();
   const [inputKey, setInputKey] = React.useState("");
   const { RemoteConnected } = useWebSocket();
   const [Interface, setInterface] = React.useState("Match");
 
+  React.useEffect(()=>{
+    ProtectedRoute()
+  },[])
 
   const links = [
     {

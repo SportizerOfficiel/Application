@@ -10,34 +10,41 @@ import PlayerList from "./PlayerList";
 import SportConfig from "@/SportConfig";
 import MatchConfigGenerator from "./MatchConfigGenerator";
 import ConfirmMatch from "./ConfirmMatch";
+
 const RemoteGenerator = () => {
- const SportContext =  useSport();
+  const SportContext = useSport();
   const [active, setActive] = React.useState(0);
   const [MatchData, setMatchData] = React.useState({});
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
 
-
-
   const [Parameters, HandleSubmit3, resetForm3] = useForm((data) => {
-    nextStep();
+
     setMatchData({ ...MatchData, Parameters: data });
+    nextStep();
   });
   const [PlayerList1, HandleSubmit1, resetForm1] = useForm((data) => {
-    nextStep();
+
     const Team = FiltreTeam(data);
     setMatchData({ ...MatchData, TEAM1: Team });
+    nextStep();
   });
   const [PlayerList2, HandleSubmit2, resetForm2] = useForm((data) => {
-    nextStep();
+
     const Team = FiltreTeam(data);
     setMatchData({ ...MatchData, TEAM2: Team });
+    nextStep();
   });
 
   const ActiveList = (number) => {
     setActive(number);
   };
 
+  const ChangeClubLogo = (team, url) => {
+    const updatedMatchData = { ...MatchData };
+    updatedMatchData[team].club.clubLogo = url;
+    setMatchData(updatedMatchData);
+  };
   
 
   return (
@@ -49,7 +56,9 @@ const RemoteGenerator = () => {
         height: "100%",
       })}
     >
-      {active === 3 && <ConfirmMatch recap={MatchData} prevStep={prevStep} ></ConfirmMatch>}
+      {active === 3 && (
+        <ConfirmMatch ChangeClubLogo={ChangeClubLogo} recap={MatchData} prevStep={prevStep}></ConfirmMatch>
+      )}
 
       <Container sx={(theme) => ({})}>
         <Box
@@ -69,7 +78,9 @@ const RemoteGenerator = () => {
           <form ref={PlayerList1} onSubmit={HandleSubmit1}>
             <PlayerList
               PlayerList={SportContext.getSportConfig().PlayerList}
-              key="team1"
+              recap={MatchData}
+              key="TEAM1"
+              team="TEAM1"
               clublabel="Nom d'équipe 1"
               prevStep={prevStep}
             ></PlayerList>
@@ -83,14 +94,15 @@ const RemoteGenerator = () => {
           <form ref={PlayerList2} onSubmit={HandleSubmit2}>
             <PlayerList
               PlayerList={SportContext.getSportConfig().PlayerList}
-              key="team2"
+              key="TEAM2"
+              recap={MatchData}
+              team="TEAM2"
               clublabel="Nom d'équipe 2"
               prevStep={prevStep}
             ></PlayerList>
           </form>
         </Box>
       </Container>
- 
     </Flex>
   );
 };
@@ -107,21 +119,27 @@ const FiltreTeam = (data) => {
         const playerId = data[key];
         const nameKey = key.replace("Titulaire ", "").replace("id_", "") + "_name";
         const numberKey = key.replace("Titulaire ", "").replace("id_", "") + "_number";
+        const idClubKey = key.replace("Titulaire ", "").replace("id_", "") + "_idclub";
+        const baseNumberKey = key.replace("Titulaire ", "").replace("id_", "") + "_basenumber";
         const name = data[nameKey];
         const number = data[numberKey];
-
+        const idclub = data[idClubKey];
+        const baseNumber = data[baseNumberKey];
         if (playerId && name && number) {
-          titulaires.push({ playerId, name, number });
+          titulaires.push({ playerId, name, number ,idclub,sub:false,baseNumber});
         }
       } else if (key.startsWith("Remplacant")) {
         const playerId = data[key];
         const nameKey = key.replace("Remplacant ", "").replace("id_", "") + "_name";
         const numberKey = key.replace("Remplacant ", "").replace("id_", "") + "_number";
+        const idClubKey = key.replace("Remplacant ", "").replace("id_", "") + "_idclub";
+        const baseNumberKey = key.replace("Remplacant ", "").replace("id_", "") + "_basenumber";
         const name = data[nameKey];
         const number = data[numberKey];
-
+        const idclub = data[idClubKey];
+        const baseNumber = data[baseNumberKey];
         if (playerId && name && number) {
-          remplacants.push({ playerId, name, number });
+          remplacants.push({ playerId, name, number,idclub,sub:true,baseNumber });
         }
       } else if (key.startsWith("Club")) {
         const clubId = data[key];
@@ -154,8 +172,6 @@ const FiltreTeam = (data) => {
       newPlayers.push({ playerId: newPlayerId, name: playerName, number: playerNumber, new: isNewPlayer });
     }
   }
-
-
 
   return { titulaires, remplacants, club, newPlayers };
 };

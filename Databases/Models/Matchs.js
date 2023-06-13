@@ -16,14 +16,14 @@ const MatchSchema = new Schema(
         isSub: { type: Boolean, default: false },
         points: [
           {
-            type: { type: String, required: true },
-            value: { type: Number, required: true },
+            type: { type: String, required: false },
+            value: { type: Number, required: false },
           },
         ],
         faults: [
           {
-            type: { type: String, required: true },
-            value: { type: Number, required: true },
+            type: { type: String, required: false },
+            value: { type: Number, required: false },
           },
         ],
       },
@@ -34,14 +34,14 @@ const MatchSchema = new Schema(
         isSub: { type: Boolean, default: false },
         points: [
           {
-            type: { type: String, required: true },
-            value: { type: Number, required: true },
+            type: { type: String, required: false },
+            value: { type: Number, required: false },
           },
         ],
         faults: [
           {
-            type: { type: String, required: true },
-            value: { type: Number, required: true },
+            type: { type: String, required: false },
+            value: { type: Number, required: false },
           },
         ],
       },

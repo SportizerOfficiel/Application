@@ -16,15 +16,13 @@ const Screen = () => {
   const SportContext = useSport();
   const { key, fetchKey, RemoteConnected, setIsScreen, setInit, Init, ShowWin } = useWebSocket();
   const { isPausex, isTimeOut,isRunning } = useTimer();
+
   useEffect(() => {
     setIsScreen(true);
     if (!RemoteConnected) fetchKey();
   }, [RemoteConnected]);
 
-  const videos = [
-    "dQw4w9WgXcQ",
-    "ZsBxbY4LZbo" 
-  ];
+
   return (
     <Box
       sx={(theme) => ({
@@ -92,7 +90,7 @@ const Screen = () => {
         </Flex>
       )}
       {Init && RemoteConnected && SportContext.Instance  && !ShowWin && isRunning && (isPausex.current || isTimeOut.current)  && (
-        <Pub videos={videos} />
+        <Pub />
       )}
       {ShowWin && <Firework />}
     </Box>

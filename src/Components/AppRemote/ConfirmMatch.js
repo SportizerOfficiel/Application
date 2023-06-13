@@ -5,10 +5,15 @@ import { Button, Flex, Space } from "@mantine/core";
 import React from "react";
 import { createStyles, Paper, Card, Group, Switch, Text, rem, Box, Container } from "@mantine/core";
 import { useSport } from "@/Context/SportContext";
+import ImageConverter from "./ImageConverter";
+import { getPubsId } from "@/Services/Users";
+import { useWebSocket } from "@/Context/WebSocketContext";
+import useAuth from "@/Utils/Hooks/useAuth";
 
-const ConfirmMatch = ({ recap, prevStep, MatchData }) => {
+const ConfirmMatch = ({ recap, prevStep, MatchData,ChangeClubLogo }) => {
   const SportContext = useSport();
-
+ const {user} = useAuth()
+ const WebSocketContext = useWebSocket()
   return (
     <Container
       sx={(theme) => ({
@@ -24,8 +29,13 @@ const ConfirmMatch = ({ recap, prevStep, MatchData }) => {
 
         <Button
       
-          onClick={() => {
+          onClick={ async () => {
+            console.log(user)
+           const pubs = await getPubsId(user.userId);
+           console.log(pubs)
+           WebSocketContext.sendPostMessage("pubs",pubs);
             SportContext.setConfig(recap);
+            
           }}
         >
           Creer le Match
@@ -49,8 +59,9 @@ const ConfirmMatch = ({ recap, prevStep, MatchData }) => {
               width: "100%",
             })}
           >
-            <PlayerTableau data={recap.TEAM1}></PlayerTableau>
-            <PlayerTableau data={recap.TEAM2}></PlayerTableau>
+          
+            <PlayerTableau ChangeClubLogo={ChangeClubLogo} data={recap.TEAM1} team="TEAM1"></PlayerTableau>
+            <PlayerTableau ChangeClubLogo={ChangeClubLogo} data={recap.TEAM2} team="TEAM2"></PlayerTableau>
           </Flex>
         </Paper>
         <Paper

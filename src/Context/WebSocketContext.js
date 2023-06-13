@@ -1,6 +1,7 @@
 /** @format */
+import useAuth from "@/Utils/Hooks/useAuth";
+import React from "react";
 
-// services/WebSocketContext.js
 import { createContext, useContext, useState, useEffect } from "react";
 import webSocketServiceInstance from "../Services/websocket";
 import WebSocketService from "../Services/websocket";
@@ -23,7 +24,8 @@ export const WebSocketProvider = ({ children }) => {
   const [IsScreen, setIsScreen] = useState(false);
   const [ShowWin, setShowWin] = useState(false);
   const [subscribers, setSubscribers] = useState({});
-
+  const [Pubs, setPubs] = useState([]);
+  const {logout} = useAuth()
   const fetchKey = async () => {
     setloading(true);
     try {
@@ -74,7 +76,7 @@ export const WebSocketProvider = ({ children }) => {
   }, [key]);
 
   const onSocket = (eventName, callback) => {
-    setSubscribers(prevSubscribers => {
+    setSubscribers((prevSubscribers) => {
       const newSubscribers = {
         ...prevSubscribers,
         [eventName]: [...(prevSubscribers[eventName] || []), callback],
@@ -84,21 +86,19 @@ export const WebSocketProvider = ({ children }) => {
       }
       return newSubscribers;
     });
-  
+
     // Return a function that will remove the listener when called
     return () => {
-      setSubscribers(prevSubscribers => {
+      setSubscribers((prevSubscribers) => {
         return {
           ...prevSubscribers,
-          [eventName]: (prevSubscribers[eventName] || []).filter(cb => cb !== callback)
+          [eventName]: (prevSubscribers[eventName] || []).filter((cb) => cb !== callback),
         };
       });
     };
   };
-  
 
   const handlerMessage = (data) => {
-    console.log(data.type, "GET WEBSOCKET CALL");
     switch (data.type) {
       case "connected":
         setRemoteConnected(true);
@@ -108,6 +108,9 @@ export const WebSocketProvider = ({ children }) => {
         break;
       case "error":
         setError(data.message);
+        break;
+      case "pubs":
+        setPubs(data.message);
         break;
       case "instance":
         setpayload({ ...data.message });
@@ -120,7 +123,7 @@ export const WebSocketProvider = ({ children }) => {
         break;
       default:
         if (subscribers[data.type]) {
-          subscribers[data.type].forEach(callback => callback(data.message));
+          subscribers[data.type].forEach((callback) => callback(data.message));
         }
         break;
     }
@@ -136,7 +139,9 @@ export const WebSocketProvider = ({ children }) => {
     setpayload(null);
     settimerpayload(null);
     setloading(false);
-    setShowWin(false)
+    setShowWin(false);
+    if(!IsScreen)
+    logout();
   };
 
   const value = {
@@ -159,9 +164,10 @@ export const WebSocketProvider = ({ children }) => {
     setIsScreen,
     reset,
     Init,
+    Pubs,
     setInit,
     ShowWin,
-    onSocket
+    onSocket,
   };
 
   return <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>;

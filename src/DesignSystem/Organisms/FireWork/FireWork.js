@@ -19,12 +19,6 @@ export default function FireWork() {
     } else {
       setWinner(SportContext.Instance.TEAM2);
     }
-    console.log(
-      teamPoints[teamNames[0]] > teamPoints[teamNames[1]],
-      teamPoints[teamNames[0]],
-      teamPoints[teamNames[1]],
-      SportContext.Instance
-    );
   }, []);
 
   return (

@@ -71,8 +71,62 @@ const deleteUserById = HandleRequest(async ({ body, id }) => {
   return data;
 });
 
+const getPubsId = HandleRequest(async ({ body, id }) => {
+  await dbConnect();
+  console
+  const user = await User.findById(id);
+  if (!user) throw new Error("User not found");
 
+  return user.PubsId;
+});
 
+const getAllPubsId = HandleRequest(async () => {
+  await dbConnect();
+  const users = await User.find({}, 'PubsId'); 
+  return users;
+});
+
+const addPubsId = HandleRequest(async ({ body, id }) => {
+  await dbConnect();
+  const user = await User.findById(id);
+  if (!user) throw new Error("User not found");
+
+  if (user.PubsId.includes(body.PubsId)) {
+    throw new Error("ID already exists");
+  }
+
+  user.PubsId.push(body.PubsId);
+  await user.save();
+
+  return user;
+});
+
+const removePubsId = HandleRequest(async ({ body, id }) => {
+  await dbConnect();
+  const user = await User.findById(id);
+  if (!user) throw new Error("User not found");
+
+  const index = user.PubsId.indexOf(body.PubsId);
+  if (index === -1) {
+    throw new Error("ID not found");
+  }
+
+  user.PubsId.splice(index, 1);
+  await user.save();
+
+  return user;
+});
+
+const updatePubsIds = HandleRequest(async ({ body, id }) => { // Renamed to updatePubsIds
+  await dbConnect();
+  const user = await User.findById(id);
+  if (!user) throw new Error("User not found");
+
+  user.PubsId = body.PubsIds; // body.PubsIds should be an array of IDs
+  await user.save();
+
+  return user;
+});
 
 /**
  * Connexion d'un utilisateur
@@ -92,11 +146,15 @@ const login = HandleRequest(async ({ body }) => {
   if (!isPasswordValid) throw new Error("Invalid Password");
 
   const token = jwt.sign({ userId: user._id,Email:user.Email }, SECRET_KEY, {
-    expiresIn: "1h",
+    expiresIn: "3h",
   });
 
   return {
     token,
+    id:user._id
   };
 });
-export { getUsers, getUserById, putUserById, postUser, deleteUserById,login };
+export { 
+  getUsers, getUserById, putUserById, postUser, deleteUserById, login, 
+  getPubsId, getAllPubsId, addPubsId, removePubsId, updatePubsIds 
+};

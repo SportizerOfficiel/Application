@@ -18,6 +18,7 @@ export default async function handler(req, res) {
     case "POST":
       return await PlayersController.postPlayers({ body, res });
     case "PUT":
+      console.log(query?.id,body,"APIIII");
       if (!query.id) {
         return Status.NotFound({ result: "Missing id in query string", res });
       }

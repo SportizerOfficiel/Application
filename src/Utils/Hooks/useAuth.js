@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+/** @format */
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import jwtDecode from "jwt-decode";
 
 const useAuth = () => {
   const router = useRouter();
@@ -7,20 +10,24 @@ const useAuth = () => {
 
   useEffect(() => {
     // Vérifier si l'utilisateur est authentifié
-    const token = localStorage.getItem('jwt');
+    const token = localStorage.getItem("jwt");
     if (token) {
       // Récupérer les informations de l'utilisateur à partir du token
       const user = decodeToken(token);
       setUser(user);
-    } else {
-      // Si l'utilisateur n'est pas authentifié, rediriger vers la page de connexion
-      router.replace('/Sign');
     }
   }, []);
+  const ProtectedRoute = () => {
+    // Vérifier si l'utilisateur est authentifié
+    const token = localStorage.getItem("jwt");
+    if (!token) {
+      router.replace("/Sign");
+    }
+  };
 
   const login = (token) => {
     // Enregistrer le token dans le localStorage
-    localStorage.setItem('jwt', token);
+    localStorage.setItem("jwt", token);
     // Récupérer les informations de l'utilisateur à partir du token
     const user = decodeToken(token);
     setUser(user);
@@ -28,18 +35,24 @@ const useAuth = () => {
 
   const logout = () => {
     // Supprimer le token du localStorage
-    localStorage.removeItem('jwt');
+    localStorage.removeItem("jwt");
     setUser(null);
     // Rediriger vers la page de connexion
-    router.replace('/Sign');
+    router.replace("/Sign");
   };
 
-  return { user, login, logout };
+  return { user, login, logout, ProtectedRoute };
 };
 
 function decodeToken(token) {
-  // Implémenter la logique pour décoder le token JWT ici
-  return { name: 'John Doe', email: 'john.doe@example.com' };
+  try {
+    const decoded = jwtDecode(token);
+    return decoded;
+  } catch (error) {
+    // Handle errors here
+    console.log(error);
+    return null;
+  }
 }
 
 export default useAuth;

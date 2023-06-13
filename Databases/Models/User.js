@@ -11,6 +11,7 @@ const UsersSchema = new mongoose.Schema(
     Phone: { type: String },
     AvatarUrl: { type: String },    
     IsActive: { type: Boolean, default: true },
+    PubsId: [{ type: String }]
     },
   { timestamps: true }
 );

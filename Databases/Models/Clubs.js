@@ -7,8 +7,7 @@ const Schema = mongoose.Schema;
 const ClubsSchema = new Schema({
   Name: { type: String, required: true },
   Sport: { type: String, required: true },
-  Logo: { type: String, required: false },
-  Color: { type: String, required: false }
+  Logo: { type: String, required: false }
 },
 { timestamps: true });
 // Avant l'enregistrement, normalise le nom en minuscules

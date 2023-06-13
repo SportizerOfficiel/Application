@@ -15,7 +15,7 @@ const MatchInstance = () => {
   const teamPoints = CountPoints(SportContext);
   const teamNames = Object.keys(teamPoints);
   const { ShowWin } = useWebSocket();
-  
+
   return (
     <>
       {!ShowWin && (
@@ -56,6 +56,7 @@ const MatchInstance = () => {
           Durée: {SportContext.Config.Parameters.GameDuration}
         </Text>
       </Flex> */}
+
             <Flex gap="xl" justify="center">
               <Flex direction="column" justify="center" align="center">
                 <Avatar size="xl" src={SportContext.Instance.TEAM1.club.clubLogo}></Avatar>
