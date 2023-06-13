@@ -1,4 +1,4 @@
-import { Container,Flex,Text } from '@mantine/core';
+import { Box, Container,Flex,Text } from '@mantine/core';
 import React from 'react';
 
 const WaitingInstance = () => {
@@ -8,8 +8,10 @@ const WaitingInstance = () => {
             height: "100%",
             textTransform: "capitalize",
           })}>
-            <img src='/logo-couleur_S.png'></img>
-            <Text size="xl">Waiting Match configuration</Text>
+            <Box component='img' sx={(theme) => ({
+           width:"60vw"
+          })} src='/logo-couleur-blanc-L.svg'></Box>
+            <Text  mt="xl" size="xl">Waiting Match configuration</Text>
             <Text size="xl" sx={(theme) => ({
                 position:"absolute",
                 left:theme.spacing.md,
