@@ -114,7 +114,7 @@ export const TimerProvider = ({ children }) => {
   const reset = () => {
     setIsRunning(false);
     setTime(0);
-    setTotalTime(10000);
+    setTotalTime(1000000);
     PeriodDuration.current = 0;
     InterPeriodBreakDuration.current = 0;
     PeriodsBeforeBreak.current = 0;
@@ -332,6 +332,10 @@ export const TimerProvider = ({ children }) => {
       setIsRunning(true);
     });
 
+    const unsubscribeDisconnected = WebSocketContext.onSocket("disconnected", () => {
+      reset()
+    });
+
     const unsubscribeStop = WebSocketContext.onSocket("stop", () => {
       setIsRunning(false);
     });
@@ -385,6 +389,7 @@ export const TimerProvider = ({ children }) => {
       unsubscribeSync();
       unsubscribeTimeOut();
       unsubscribeAddTime();
+      unsubscribeDisconnected();
     };
   }, []);
   return (

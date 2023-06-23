@@ -22,7 +22,7 @@ const Login = () => {
       const response = await axios.post("/api/User", data, { params: { login: true } });
       const { token, PubsId } = response.data;
       localStorage.setItem("jwt", token);
-      console.log(response,localStorage);
+   
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       resetForm();
       router.replace("/Remote");
